@@ -27,7 +27,7 @@ class BatchRequest(Resource):
         user = get_current_user()
 
         try:
-            data = InputSchema().load(request.get_json())
+            data = InputSchema().load(request.get_json(force=True))
         except ValidationError as e:
             print(e.messages)
             return e.messages, 422
@@ -139,7 +139,7 @@ class BatchSubmit(Resource):
         user = get_current_user()
 
         try:
-            data = InputSchema().load(request.get_json())
+            data = InputSchema().load(request.get_json(force=True))
         except ValidationError as e:
             return e.messages, 422
 
