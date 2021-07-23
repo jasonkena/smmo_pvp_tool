@@ -1,5 +1,6 @@
 import requests
 from flask import current_app
+from flask_restful import abort
 
 
 def server_get_user(uid):

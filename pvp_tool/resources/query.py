@@ -12,7 +12,7 @@ from marshmallow.validate import Range, OneOf
 class Query(Resource):
     decorators = [jwt_required(fresh=True)]
 
-    # NOTE NOTE NOTE: When Conda releases marshmallow 3.13, replace missing with load_default
+    # NOTE NOTE NOTE: When Conda releases marshmallow 3.13, replace missing with load_default, and default with dump_default
     def post(self):
         class InputSchema(Schema):
             num_results = fields.Int(
@@ -44,8 +44,8 @@ class Query(Resource):
             uid = fields.Int(required=True, strict=True, validate=Range(min=1))
             name = fields.Str(required=True)
             level = fields.Int(required=True, strict=True, validate=Range(min=1))
-            gold = (fields.Int(required=True, strict=True, validate=Range(min=0)),)
-            guild_name = fields.Str(required=True, allow_none=True)
+            gold = fields.Int(required=True, strict=True, validate=Range(min=0))
+            guild_name = fields.Str(required=True, allow_none=True, default="")
             timestamp = fields.DateTime(required=True)
 
             @post_dump
