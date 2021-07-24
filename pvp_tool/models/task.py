@@ -12,7 +12,7 @@ class Task(db.Model):
     # many to one
     assigned_user = db.relationship("User", back_populates="tasks", uselist=False)
     assigned_user_uid = db.Column(db.Integer, db.ForeignKey("user.uid"), nullable=True)
-    assigned_timestamp = db.Column(db.DateTime, nullable=True)
+    assigned_timestamp = db.Column(db.DateTime(timezone=True), nullable=True)
 
     jobs = db.relationship("Job", back_populates="tasks", secondary=association_table)
 

@@ -1,11 +1,11 @@
-from datetime import datetime
+from datetime import datetime, timezone
 from pvp_tool.utils import db
 from pvp_tool.models import Job, Task
 from pvp_tool.actions.task import get_task
 
 
 def create_job(user, guild_ids):
-    job = Job(creating_user=user, created_timestamp=datetime.utcnow())
+    job = Job(creating_user=user, created_timestamp=datetime.now(timezone.utc))
     tasks = []
     for guild_id in guild_ids:
         tasks.append(get_task(guild_id, False))

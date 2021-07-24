@@ -1,5 +1,5 @@
 from flask import current_app
-from datetime import datetime
+from datetime import datetime, timezone
 from pvp_tool.utils import db
 from pvp_tool.models import Task, Player, parse_player_json
 
@@ -20,7 +20,7 @@ def assign_task(task, user):
     # https://stackoverflow.com/questions/25943616/update-limit-1-with-sqlalchemy-and-postgresql/25943713#25943713
     if user:
         task.assigned_user = user
-        task.assigned_timestamp = datetime.utcnow()
+        task.assigned_timestamp = datetime.now(timezone.utc)
     else:
         task.assigned_user = None
         task.assigned_timestamp = None
@@ -36,7 +36,7 @@ def process_task_result(task, user, json_dict):
         # in order to handle error edge cases
         dictionary["uid"] = task.uid
         dictionary["user"] = user
-        dictionary["timestamp"] = datetime.utcnow()
+        dictionary["timestamp"] = datetime.now(timezone.utc)
 
         player = Player(**dictionary)
         db.session.merge(player)
@@ -59,7 +59,7 @@ def clean_tasks():
         .filter(
             Task.assigned_timestamp != None,
             Task.assigned_timestamp
-            < (datetime.utcnow() - current_app.config["CLEAN_TASKS_DELTA"]),
+            < (datetime.now(timezone.utc) - current_app.config["CLEAN_TASKS_DELTA"]),
         )
         .all()
     )

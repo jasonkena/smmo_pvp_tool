@@ -27,14 +27,18 @@ class Query(Resource):
                 validate=Range(min=1),
                 load_default=lambda: server_get_user(get_jwt_identity())["level"],
             )
-            minimum_gold = fields.Int(strict=True, validate=Range(min=1), load_default=0)
+            minimum_gold = fields.Int(
+                strict=True, validate=Range(min=1), load_default=0
+            )
             player_blacklist = fields.List(
                 fields.Int(strict=True, validate=Range(min=1)), load_default=[]
             )
             guild_blacklist = fields.List(
                 fields.Int(strict=True, validate=Range(min=1)), load_default=[]
             )
-            last_update = fields.Int(strict=True, validate=Range(min=1), load_default=None)
+            last_update = fields.Int(
+                strict=True, validate=Range(min=1), load_default=None
+            )
             sort_by = fields.Str(
                 validate=OneOf(["gold", "level", "last_update"]), load_default="gold"
             )

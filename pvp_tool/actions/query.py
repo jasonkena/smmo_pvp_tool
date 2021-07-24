@@ -1,5 +1,5 @@
 from flask import current_app
-from datetime import datetime, timedelta
+from datetime import datetime, timezone, timedelta
 from pvp_tool.utils import db
 from pvp_tool.models import Player
 
@@ -36,7 +36,8 @@ def process_query(
     query = query.filter(~Player.guild_id.in_(guild_blacklist))
     if last_update:
         query = query.filter(
-            Player.timestamp > (datetime.utcnow() - timedelta(minutes=last_update))
+            Player.timestamp
+            > (datetime.now(timezone.utc) - timedelta(minutes=last_update))
         )
 
     if sort_by == "gold":

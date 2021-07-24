@@ -11,8 +11,8 @@ class Player(db.Model):
         db.String(100), nullable=False
     )  # as specified on https://web.simple-mmo.com/diamondstore/membership
     profile_number = db.Column(db.String(4), nullable=False)
-    exp = db.Column(db.Integer, nullable=False)
-    gold = db.Column(db.Integer, nullable=False)
+    exp = db.Column(db.BigInteger, nullable=False)
+    gold = db.Column(db.BigInteger, nullable=False)
     steps = db.Column(db.Integer, nullable=False)
     npc_kills = db.Column(db.Integer, nullable=False)
     user_kills = db.Column(db.Integer, nullable=False)
@@ -26,7 +26,7 @@ class Player(db.Model):
     hp = db.Column(db.Integer, nullable=False)
     max_hp = db.Column(db.Integer, nullable=False)
     safeMode = db.Column(db.Boolean, nullable=False)
-    safeModeTime = db.Column(db.DateTime, nullable=True)
+    safeModeTime = db.Column(db.DateTime(timezone=True), nullable=True)
     background = db.Column(db.Integer, nullable=False)
     membership = db.Column(db.Boolean, nullable=False)
     guild_id = db.Column(db.Integer, nullable=True)
@@ -36,7 +36,7 @@ class Player(db.Model):
     # many to one
     user = db.relationship("User", uselist=False)
     user_uid = db.Column(db.Integer, db.ForeignKey("user.uid"), nullable=False)
-    timestamp = db.Column(db.DateTime, nullable=False)
+    timestamp = db.Column(db.DateTime(timezone=True), nullable=False)
 
     def __repr__(self):
         return f'<Player (uid={self.uid}, name="{self.name}", level={self.level}, guild="{self.guild_name}")>'

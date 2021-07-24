@@ -9,7 +9,7 @@ class Job(db.Model):
     # many to one
     creating_user = db.relationship("User", back_populates="jobs", uselist=False)
     creating_user_uid = db.Column(db.Integer, db.ForeignKey("user.uid"), nullable=False)
-    created_timestamp = db.Column(db.DateTime, nullable=False)
+    created_timestamp = db.Column(db.DateTime(timezone=True), nullable=False)
 
     tasks = db.relationship("Task", back_populates="jobs", secondary=association_table)
 
