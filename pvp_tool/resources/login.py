@@ -10,17 +10,19 @@ from flask_jwt_extended import (
     create_access_token,
 )
 from pvp_tool.utils import server_get_user
+from pvp_tool.actions import get_user
 
 
 class LoginStatus(Resource):
     decorators = [jwt_required(optional=True, fresh=False)]
 
     def get(self):
+        # db.session.commit() is not necessary
         # can be None, -1, or positive
         identity = get_jwt_identity()
         if (identity is not None) and (identity > -1):
-            return {"uid": identity}
-        return {"uid": None}
+            return {"uid": identity, "balance": get_user(identity).balance}
+        return {"uid": None, "balance": 0}
 
 
 class LoginRequest(Resource):
