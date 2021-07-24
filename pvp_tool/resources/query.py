@@ -12,7 +12,6 @@ from marshmallow.validate import Range, OneOf
 class Query(Resource):
     decorators = [jwt_required(fresh=True)]
 
-    # NOTE NOTE NOTE: When Conda releases marshmallow 3.13, replace missing with load_default, and default with dump_default
     def post(self):
         class InputSchema(Schema):
             num_results = fields.Int(
@@ -21,23 +20,23 @@ class Query(Resource):
                 validate=Range(min=1, max=current_app.config["MAX_QUERY_RESULTS"]),
             )
             guild_ids = fields.List(
-                fields.Int(strict=True, validate=Range(min=1)), missing=[]
+                fields.Int(strict=True, validate=Range(min=1)), load_default=[]
             )
             maximum_level = fields.Int(
                 strict=True,
                 validate=Range(min=1),
-                missing=lambda: server_get_user(get_jwt_identity())["level"],
+                load_default=lambda: server_get_user(get_jwt_identity())["level"],
             )
-            minimum_gold = fields.Int(strict=True, validate=Range(min=1), missing=0)
+            minimum_gold = fields.Int(strict=True, validate=Range(min=1), load_default=0)
             player_blacklist = fields.List(
-                fields.Int(strict=True, validate=Range(min=1)), missing=[]
+                fields.Int(strict=True, validate=Range(min=1)), load_default=[]
             )
             guild_blacklist = fields.List(
-                fields.Int(strict=True, validate=Range(min=1)), missing=[]
+                fields.Int(strict=True, validate=Range(min=1)), load_default=[]
             )
-            last_update = fields.Int(strict=True, validate=Range(min=1), missing=None)
+            last_update = fields.Int(strict=True, validate=Range(min=1), load_default=None)
             sort_by = fields.Str(
-                validate=OneOf(["gold", "level", "last_update"]), missing="gold"
+                validate=OneOf(["gold", "level", "last_update"]), load_default="gold"
             )
 
         class OutputSchema(Schema):
@@ -45,7 +44,7 @@ class Query(Resource):
             name = fields.Str(required=True)
             level = fields.Int(required=True, strict=True, validate=Range(min=1))
             gold = fields.Int(required=True, strict=True, validate=Range(min=0))
-            guild_name = fields.Str(required=True, allow_none=True, default="")
+            guild_name = fields.Str(required=True, allow_none=True, dump_default="")
             timestamp = fields.DateTime(required=True)
 
             @post_dump
