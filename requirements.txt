@@ -6,5 +6,6 @@ flask-restful=0.3.9=pyhd8ed1ab_0
 flask-sqlalchemy=2.5.1=pyhd8ed1ab_0
 marshmallow=3.13.0=pyhd8ed1ab_0
 marshmallow-oneofschema=3.0.1=pyhd8ed1ab_0
+psycopg2=2.9.1=py39h9d1abf3_0
 python=3.9.6=hd187cdc_1_cpython
 requests=2.26.0=pyhd8ed1ab_0

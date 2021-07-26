@@ -8,9 +8,7 @@ class Config(object):
         b"***REMOVED***"
     )
     SQLALCHEMY_ECHO = True
-    SQLALCHEMY_DATABASE_URI = "sqlite:///" + os.path.join(
-        os.path.dirname(__file__), "data.db"
-    )
+    SQLALCHEMY_DATABASE_URI = "postgresql+psycopg2://" + "smmo:smmo@localhost" + "/data"
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     PROPAGATE_EXCEPTIONS = True
 
