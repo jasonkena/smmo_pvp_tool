@@ -46,7 +46,7 @@
     ></script>
     <script src="https://cdn.jsdelivr.net/npm/js-cookie@2.2.1/src/js.cookie.min.js"></script>
     <script>
-      var SERVER_URL = "{{ url_for(request.endpoint, _external=True) }}";
+        var CLIENT_CONFIG = {{ CLIENT_CONFIG | tojson | safe }};
     </script>
     <script src="{{ url_for('static', filename='pvptool.js', _external=True) }}"></script>
   </body>

@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, current_app, request
 
 from pvp_tool.utils import db, jwt, api
 from pvp_tool.resources import api_bp
@@ -17,6 +17,8 @@ def create_app():
 
     @app.route("/")
     def client():
-        return render_template("content.html")
+        client_config = current_app.config["CLIENT_CONFIG"].copy()
+        client_config["SERVER_URL"] = request.base_url
+        return render_template("content.html", CLIENT_CONFIG=client_config)
 
     return app

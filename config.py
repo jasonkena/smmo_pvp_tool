@@ -16,8 +16,6 @@ class Config(object):
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     PROPAGATE_EXCEPTIONS = True
 
-    JWT_ALGORITHM = "HS256"
-
     # used to query levels and authentication
     SMMO_SERVER_API_KEY = "***REMOVED***"
 
@@ -38,6 +36,13 @@ class Config(object):
     # number of guilds
     MAX_JOB_GUILDS = 20
     MAX_QUERY_RESULTS = 50
+
+    CLIENT_CONFIG = {
+        "BATCH_SIZE": 5,
+        "SMMO_DELAY": (60 / 40) * 1000,
+        "API_DELAY": 1000,
+        "AJAX_TIMEOUT": 10000,
+    }
 
 
 class ProductionConfig(Config):

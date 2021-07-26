@@ -1,11 +1,8 @@
-console.log(SERVER_URL);
-var BATCH_SIZE = 5;
-var SMMO_DELAY = (60 / 40) * 1000;
-var API_DELAY = 1000;
+console.log(CLIENT_CONFIG["SERVER_URL"]);
 
 $.ajaxSetup({
   // it automatically retries if set to 0
-  timeout: 10000,
+  timeout: CLIENT_CONFIG["AJAX_TIMEOUT"],
 });
 
 function raiseError(error) {
@@ -24,7 +21,7 @@ function loginStatus() {
         xhr.setRequestHeader("Authorization", "Bearer " + access_token);
       }
     },
-    url: SERVER_URL + "api/login/status",
+    url: CLIENT_CONFIG["SERVER_URL"] + "api/login/status",
     cache: false,
     success: function (data) {
       Cookies.set("uid", data["uid"]);
@@ -47,7 +44,6 @@ function getFormData(selector) {
   api = data["api"];
   data = _.omit(data, ["sort_by", "api"]);
 
-  //try {
   try {
     data = _.mapValues(data, JSON.parse);
   } catch (error) {
@@ -70,7 +66,7 @@ function loginRequest() {
   }
   $.ajax({
     type: "GET",
-    url: SERVER_URL + "api/login/" + uid,
+    url: CLIENT_CONFIG["SERVER_URL"] + "api/login/" + uid,
     cache: false,
     success: function (data) {
       Cookies.set("motto", data["motto"]);
@@ -95,7 +91,7 @@ function loginVerify() {
     beforeSend: function (xhr) {
       xhr.setRequestHeader("Authorization", "Bearer " + verification_token);
     },
-    url: SERVER_URL + "api/login/verify",
+    url: CLIENT_CONFIG["SERVER_URL"] + "api/login/verify",
     cache: false,
     success: function (data) {
       Cookies.set("access_token", data["access_token"]);
@@ -119,7 +115,7 @@ function getQuery() {
     beforeSend: function (xhr) {
       xhr.setRequestHeader("Authorization", "Bearer " + access_token);
     },
-    url: SERVER_URL + "api/query/submit",
+    url: CLIENT_CONFIG["SERVER_URL"] + "api/query/submit",
     data: query,
     cache: false,
     success: updateTable,
@@ -173,8 +169,8 @@ function requestBatch() {
     beforeSend: function (xhr) {
       xhr.setRequestHeader("Authorization", "Bearer " + access_token);
     },
-    url: SERVER_URL + "api/batch/request",
-    data: JSON.stringify({ num_tasks: BATCH_SIZE }),
+    url: CLIENT_CONFIG["SERVER_URL"] + "api/batch/request",
+    data: JSON.stringify({ num_tasks: CLIENT_CONFIG["BATCH_SIZE"] }),
     cache: false,
   }).fail(function (jqXHR, textStatus, errorThrown) {
     raiseError(
@@ -215,7 +211,7 @@ function submitBatch(data) {
     beforeSend: function (xhr) {
       xhr.setRequestHeader("Authorization", "Bearer " + access_token);
     },
-    url: SERVER_URL + "api/batch/submit",
+    url: CLIENT_CONFIG["SERVER_URL"] + "api/batch/submit",
     data: JSON.stringify(data),
     cache: false,
   }).fail(function (jqXHR, textStatus, errorThrown) {
@@ -239,7 +235,7 @@ function later(delay, func, value) {
 async function loop() {
   let batch = await requestBatch();
   let promises = (beta = _.map(batch, (value, i) =>
-    later(i * SMMO_DELAY, processTask, value)
+    later(i * CLIENT_CONFIG["SMMO_DELAY"], processTask, value)
   ));
   // if clearTimeouts is called, this may be left unresolved
   let results = await Promise.all(promises);
@@ -262,7 +258,7 @@ async function mining() {
   if (miningStatus()) {
     try {
       await loop();
-      setTimeout(mining, API_DELAY);
+      setTimeout(mining, CLIENT_CONFIG["API_DELAY"]);
     } catch (error) {
       clearTimeouts();
       miningStatus(false);
