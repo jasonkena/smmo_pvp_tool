@@ -5,7 +5,7 @@ from pvp_tool.models.association_table import association_table
 class Task(db.Model):
     # composite primary key, in order to separate uids between guilds and players
     # target player/guild
-    uid = db.Column(db.Integer, primary_key=True, nullable=False)
+    uid = db.Column(db.ForeignKey("playercache.uid"), primary_key=True, nullable=False)
     # player task vs guild task
     is_player_task = db.Column(db.Boolean, primary_key=True, nullable=False)
 

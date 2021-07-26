@@ -3,7 +3,7 @@ from datetime import datetime
 
 
 class Player(db.Model):
-    uid = db.Column(db.Integer, primary_key=True, nullable=False)
+    uid = db.Column(db.ForeignKey("playercache.uid"), primary_key=True, nullable=False)
     invalid = db.Column(db.Boolean, nullable=False)
     name = db.Column(db.String(), nullable=False)
     level = db.Column(db.Integer, nullable=False)
@@ -32,6 +32,7 @@ class Player(db.Model):
     guild_id = db.Column(db.Integer, nullable=True)
     guild_name = db.Column(db.String(), nullable=True)
 
+    # cache = db.relationship("PlayerCache", uselist=False, viewonly=True)
     # player who scanned
     # many to one
     user = db.relationship("User", uselist=False)

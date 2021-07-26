@@ -4,6 +4,10 @@ import os
 
 class Config(object):
     ADMIN_UIDS = [613732]
+    # https://web.simple-mmo.com/town-hall/stats
+    # NOTE: ALWAYS ROUND DOWN
+    NUM_PLAYERS = 615000
+
     SECRET_KEY = (
         b"***REMOVED***"
     )
