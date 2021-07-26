@@ -1,4 +1,5 @@
 console.log(CLIENT_CONFIG["SERVER_URL"]);
+const cookies = Cookies.withAttributes({ sameSite: "strict" });
 
 $.ajaxSetup({
   // it automatically retries if set to 0
@@ -13,7 +14,7 @@ function raiseError(error) {
 }
 
 function loginStatus() {
-  let access_token = Cookies.get("access_token");
+  let access_token = cookies.get("access_token");
   $.ajax({
     type: "GET",
     beforeSend: function (xhr) {
@@ -24,8 +25,8 @@ function loginStatus() {
     url: CLIENT_CONFIG["SERVER_URL"] + "api/login/status",
     cache: false,
     success: function (data) {
-      Cookies.set("uid", data["uid"]);
-      Cookies.set("balance", data["balance"]);
+      cookies.set("uid", data["uid"]);
+      cookies.set("balance", data["balance"]);
       $("#balance").text(data["balance"]);
     },
   }).fail(function (jqXHR, textStatus, errorThrown) {
@@ -69,8 +70,8 @@ function loginRequest() {
     url: CLIENT_CONFIG["SERVER_URL"] + "api/login/" + uid,
     cache: false,
     success: function (data) {
-      Cookies.set("motto", data["motto"]);
-      Cookies.set("verification_token", data["verification_token"]);
+      cookies.set("motto", data["motto"]);
+      cookies.set("verification_token", data["verification_token"]);
       verifyModal.show();
     },
   }).fail(function (jqXHR, textStatus, errorThrown) {
@@ -82,7 +83,7 @@ function loginRequest() {
 
 function loginVerify() {
   verifyModal.hide();
-  let verification_token = Cookies.get("verification_token");
+  let verification_token = cookies.get("verification_token");
   if (_.isUndefined(verification_token)) {
     raiseError(new Error("Invalid verification token"));
   }
@@ -94,7 +95,9 @@ function loginVerify() {
     url: CLIENT_CONFIG["SERVER_URL"] + "api/login/verify",
     cache: false,
     success: function (data) {
-      Cookies.set("access_token", data["access_token"]);
+      cookies.set("access_token", data["access_token"], {
+        expires: CLIENT_CONFIG["COOKIE_EXPIRY"],
+      });
     },
   }).fail(function (jqXHR, textStatus, errorThrown) {
     raiseError(
@@ -106,7 +109,7 @@ function loginVerify() {
 function getQuery() {
   let query = getFormData($("#query-form"));
   query = JSON.stringify(query);
-  let access_token = Cookies.get("access_token");
+  let access_token = cookies.get("access_token");
   if (_.isUndefined(access_token)) {
     raiseError(new Error("Invalid access token"));
   }
@@ -160,7 +163,7 @@ function updateTable(data) {
 }
 
 function requestBatch() {
-  let access_token = Cookies.get("access_token");
+  let access_token = cookies.get("access_token");
   if (_.isUndefined(access_token)) {
     raiseError(new Error("Invalid access token"));
   }
@@ -202,7 +205,7 @@ function processTask(task) {
 }
 
 function submitBatch(data) {
-  let access_token = Cookies.get("access_token");
+  let access_token = cookies.get("access_token");
   if (_.isUndefined(access_token)) {
     raiseError(new Error("Invalid access token"));
   }
@@ -286,7 +289,7 @@ $("#search-button").click(getQuery);
 $("#submit-uid-button").click(loginRequest);
 $("#verify-button").click(loginVerify);
 $("#verifyModal").on("show.bs.modal", function () {
-  $("#target-motto").text(Cookies.get("motto"));
+  $("#target-motto").text(cookies.get("motto"));
 });
 $("#balance").click(function () {
   loginStatus();
@@ -305,4 +308,20 @@ $("#mining-button").mouseover(function () {
 });
 $("#mining-button").mouseout(function () {
   $("#mining-button").text("Mining");
+});
+$("#queryModal").on("show.bs.modal", function () {
+  $("#query-form").deserialize(cookies.get("query-form"));
+});
+$("#apiModal").on("show.bs.modal", function () {
+  $("#api-form").deserialize(cookies.get("api-form"));
+});
+$("#queryModal").on("hidden.bs.modal", function () {
+  cookies.set("query-form", $("#query-form").serialize(), {
+    expires: CLIENT_CONFIG["COOKIE_EXPIRY"],
+  });
+});
+$("#apiModal").on("hidden.bs.modal", function () {
+  cookies.set("api-form", $("#api-form").serialize(), {
+    expires: CLIENT_CONFIG["COOKIE_EXPIRY"],
+  });
 });
