@@ -69,5 +69,5 @@ class LoginVerify(Resource):
 
 def get_random_string(length):
     alphabet = string.ascii_uppercase + string.digits
-    password = "".join(secrets.choice(alphabet) for i in range(length))
+    password = "".join(secrets.choice(alphabet) for _ in range(length))
     return password

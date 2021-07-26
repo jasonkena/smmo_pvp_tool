@@ -1,10 +1,7 @@
-import string
-import secrets
-
 from flask import current_app, redirect
-from flask_restful import Resource, abort
+from flask_restful import Resource
 from flask_jwt_extended import get_jwt, jwt_required
-from pvp_tool.utils import server_get_user, db
+from pvp_tool.utils import db
 from pvp_tool.actions import get_user, hit
 
 

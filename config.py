@@ -1,5 +1,4 @@
 from datetime import timedelta
-import os
 
 
 class Config(object):

@@ -1,6 +1,5 @@
 from flask import current_app
 from pvp_tool.utils import db
-from pvp_tool.models import User
 from flask_jwt_extended import create_access_token
 
 

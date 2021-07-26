@@ -3,7 +3,7 @@ from pvp_tool.utils import db
 from pvp_tool.actions import request_batch, submit_batch, get_current_user
 from marshmallow_oneofschema import OneOfSchema
 
-from flask_restful import Resource, abort
+from flask_restful import Resource
 from flask_jwt_extended import jwt_required
 from marshmallow import Schema, fields, ValidationError
 from marshmallow.validate import Range

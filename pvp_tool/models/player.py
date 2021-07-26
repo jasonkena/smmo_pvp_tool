@@ -1,5 +1,4 @@
 from pvp_tool.utils import db
-from datetime import datetime
 
 
 class Player(db.Model):

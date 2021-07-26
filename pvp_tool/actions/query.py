@@ -1,4 +1,3 @@
-from flask import current_app
 from datetime import datetime, timezone, timedelta
 from pvp_tool.utils import db
 from pvp_tool.models import Player
