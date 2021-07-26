@@ -1,4 +1,5 @@
 from datetime import datetime, timezone, timedelta
+from flask import current_app
 from pvp_tool.utils import db
 from pvp_tool.models import Player
 
@@ -47,6 +48,6 @@ def process_query(
         query = query.order_by(Player.timestamp.desc())
 
     results = query.limit(num_results).all()
-    user.balance -= len(results)
+    user.balance -= len(results) * current_app.config["QUERY_BALANCE_COST"]
 
     return results

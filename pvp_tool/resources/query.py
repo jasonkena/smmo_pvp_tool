@@ -67,7 +67,8 @@ class Query(Resource):
             return e.messages, 422
 
         if current_app.config["ENFORCE_BALANCE"] and (
-            user.balance < data["num_results"]
+            user.balance
+            < data["num_results"] * current_app.config["QUERY_BALANCE_COST"]
         ):
             abort(
                 402,

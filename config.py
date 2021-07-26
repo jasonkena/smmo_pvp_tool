@@ -20,6 +20,7 @@ class Config(object):
 
     # if True, performing a query reduces balance
     ENFORCE_BALANCE = False
+    QUERY_BALANCE_COST = 2
     # duration required for task assignment to be considered obsolete
     CLEAN_TASKS_DELTA = timedelta(minutes=5)
 
