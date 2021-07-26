@@ -57,7 +57,8 @@ class BatchSubmit(Resource):
                 "name": fields.Str(required=True),
                 "level": fields.Int(required=True, strict=True, validate=Range(min=1)),
                 "motto": fields.Str(required=True),
-                "profile_number": fields.Str(required=True),
+                # https://web.simple-mmo.com/user/view/5 has null profile number
+                "profile_number": fields.Str(required=True, allow_none=True),
                 "exp": fields.Int(required=True, strict=True, validate=Range(min=0)),
                 "gold": fields.Int(required=True, strict=True, validate=Range(min=0)),
                 "steps": fields.Int(required=True, strict=True, validate=Range(min=0)),

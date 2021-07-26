@@ -107,6 +107,8 @@ def parse_player_json(dictionary):
 
     updated_dict = update_keys(dictionary)
     updated_dict["invalid"] = False
+    if updated_dict["profile_number"] is None:
+        updated_dict["profile_number"] = ""
 
     if "guild" in updated_dict:
         updated_dict["guild_name"] = updated_dict["guild"]["name"]
