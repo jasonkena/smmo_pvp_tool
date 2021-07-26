@@ -1,0 +1,90 @@
+{% extends "base.html" %} {% block title %}PVP Tool{% endblock %} {% block
+content %}
+
+<nav class="navbar sticky-top navbar-expand-lg navbar-light bg-light">
+  <div class="container-fluid">
+    <a class="navbar-brand me-auto" href="#">PVP Tool</a>
+    <div class="navbar-nav mx-auto">
+      <button type="button" class="nav-item btn btn-primary" id="mining-button">
+        Mining
+      </button>
+      <a class="nav-item nav-link" href="#" id="search-button">Search</a>
+      <a
+        class="nav-item nav-link"
+        data-bs-toggle="modal"
+        data-bs-target="#queryModal"
+        href="#"
+        >Settings</a
+      >
+      <a
+        class="nav-item nav-link"
+        data-bs-toggle="modal"
+        data-bs-target="#apiModal"
+        href="#"
+        >Key</a
+      >
+    </div>
+    <div class="navbar-nav ms-auto">
+      <div class="nav-item navbar-text mx-3">
+        <i class="bi bi-coin" style="font-size: 1em"> </i
+        ><span id="balance" class="font-monospace">0</span>
+      </div>
+      <button
+        type="button"
+        class="nav-item btn btn-outline-info ms-auto"
+        data-bs-toggle="modal"
+        data-bs-target="#uidModal"
+        id="login-button"
+      >
+        Login
+      </button>
+    </div>
+  </div>
+</nav>
+
+{% macro start_modal(id, title_text) -%}
+<div
+  class="modal fade"
+  id="{{ id }}Modal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="queryModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="queryModalLabel">{{ title_text }}</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      {%- endmacro %} {% macro end_modal() -%}
+    </div>
+  </div>
+</div>
+{%- endmacro %} {% for modal in [["modal_query.html", "query", "Query
+parameters"], ["modal_uid.html", "uid", "Login"], ["modal_verify.html",
+"verify", "Verification"], ["modal_error.html", "error", "Error"],
+["modal_api.html", "api", "API Key"]] %} {{ start_modal(modal[1], modal[2]) }}
+{% include modal[0] %} {{ end_modal() }} {% endfor %}
+
+<div class="container">
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th scope="col">Name</th>
+        <th scope="col" class="d-none d-sm-table-cell">Guild</th>
+        <th scope="col" class="text-end">Level</th>
+        <th scope="col" class="text-end">Gold</th>
+        <th scope="col">Last updated</th>
+      </tr>
+    </thead>
+    <tbody id="table-body"></tbody>
+  </table>
+</div>
+
+{% endblock %}

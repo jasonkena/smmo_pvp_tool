@@ -1,0 +1,84 @@
+<div class="modal-body">
+  <form id="query-form">
+    <div class="form-floating mb-3">
+      <input
+        type="text"
+        class="form-control form-control-sm"
+        id="num_results"
+        name="num_results"
+        value="10"
+        placeholder=""
+      />
+      <label for="num_results"># Hits</label>
+    </div>
+    <div class="form-floating mb-3">
+      <input
+        type="text"
+        class="form-control form-control-sm"
+        id="guild_ids"
+        name="guild_ids"
+        placeholder="[1, 2, 3]"
+      />
+      <label for="guild_ids">Guild IDs</label>
+    </div>
+    <div class="form-floating mb-3">
+      <input
+        type="text"
+        class="form-control form-control-sm"
+        id="maximum_level"
+        name="maximum_level"
+        placeholder="defaults to current level"
+      />
+      <label for="maximum_level">Maximum level</label>
+    </div>
+    <div class="form-floating mb-3">
+      <input
+        type="text"
+        class="form-control form-control-sm"
+        id="minimum_gold"
+        name="minimum_gold"
+        placeholder=""
+      />
+      <label for="minimum_gold">Minimum gold</label>
+    </div>
+    <div class="form-floating mb-3">
+      <input
+        type="text"
+        class="form-control form-control-sm"
+        id="player_blacklist"
+        name="player_blacklist"
+        placeholder=""
+      />
+      <label for="player_blacklist">Player blacklist</label>
+    </div>
+    <div class="form-floating mb-3">
+      <input
+        type="text"
+        class="form-control form-control-sm"
+        id="guild_blacklist"
+        name="guild_blacklist"
+        placeholder="[1, 2, 3]"
+      />
+      <label for="guild_blacklist">Guild blacklist</label>
+    </div>
+    <div class="form-floating mb-3">
+      <input
+        type="text"
+        class="form-control form-control-sm"
+        id="last_update"
+        name="last_update"
+        placeholder=""
+      />
+      <label for="last_update">Last update (mins)</label>
+    </div>
+    <div class="form-floating mb-3">
+      <select class="form-control form-control-sm" id="sort_by" name="sort_by">
+        <option disabled selected value></option>
+        <option>gold</option>
+        <option>level</option>
+        <option>last_update</option>
+      </select>
+      <label for="sort_by">Sort by</label>
+    </div>
+  </form>
+</div>

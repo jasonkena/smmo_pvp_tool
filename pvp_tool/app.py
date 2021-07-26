@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, render_template
 
 from pvp_tool.utils import db, jwt, api
 from pvp_tool.resources import api_bp
@@ -16,7 +16,7 @@ def create_app():
     app.cli.add_command(app_cli)
 
     @app.route("/")
-    def hello_world():
-        return "hi"
+    def client():
+        return render_template("content.html")
 
     return app
