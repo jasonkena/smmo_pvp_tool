@@ -37,6 +37,7 @@ class Player(db.Model):
     user = db.relationship("User", uselist=False)
     user_uid = db.Column(db.Integer, db.ForeignKey("user.uid"), nullable=False)
     timestamp = db.Column(db.DateTime(timezone=True), nullable=False)
+    weight = db.Column(db.Float, nullable=False)
 
     def __repr__(self):
         return f'<Player (uid={self.uid}, name="{self.name}", level={self.level}, guild="{self.guild_name}")>'

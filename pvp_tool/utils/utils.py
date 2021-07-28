@@ -15,3 +15,8 @@ def server_get_user(uid):
         # Unprocessable Entity
         abort(422, description=f"Player {uid} does not exist")
     return result
+
+
+# https://stackoverflow.com/questions/952914/how-to-make-a-flat-list-out-of-a-list-of-lists
+def flatten(t):
+    return [item for sublist in t for item in sublist]

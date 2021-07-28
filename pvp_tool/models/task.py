@@ -18,3 +18,14 @@ class Task(db.Model):
 
     def __repr__(self):
         return f"<Task (uid={self.uid}, is_player_task={self.is_player_task})>"
+
+
+class PendingTask(db.Model):
+    id = db.Column(db.Integer, primary_key=True, nullable=False)
+    uid = db.Column(db.ForeignKey("playercache.uid"), nullable=False)
+    is_player_task = db.Column(db.Boolean, nullable=False)
+
+    due_timestamp = db.Column(db.DateTime(timezone=True), nullable=False)
+
+    def __repr__(self):
+        return f"<PendingTask (id={self.id}, uid={self.uid}, is_player_task={self.is_player_task})>"

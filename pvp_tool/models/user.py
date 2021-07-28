@@ -7,6 +7,8 @@ class User(db.Model):
     tasks = db.relationship("Task", back_populates="assigned_user")
     # one to many
     jobs = db.relationship("Job", back_populates="creating_user")
+    # hits
+    hits = db.relationship("Hit", back_populates="user")
 
     balance = db.Column(db.Integer, nullable=False)
 

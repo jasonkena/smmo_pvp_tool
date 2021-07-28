@@ -2,6 +2,7 @@ from datetime import datetime, timezone, timedelta
 from flask import current_app
 from pvp_tool.utils import db
 from pvp_tool.models import Player
+from pvp_tool.actions import generate_player_blacklist, clean_hits
 
 
 def process_query(
@@ -15,13 +16,13 @@ def process_query(
     last_update,
     sort_by,
 ):
-    # NOTE TODO ownership
-
+    clean_hits()
+    player_blacklist.extend(generate_player_blacklist(user))
     player_blacklist.append(user.uid)
 
     query = db.session.query(Player).filter(
         Player.invalid == False,
-        (Player.hp + 0.0) / Player.max_hp > 0.5,
+        (Player.hp + 0.0) / Player.max_hp >= 0.5,
         Player.safeMode == False,
     )
     if guild_ids:

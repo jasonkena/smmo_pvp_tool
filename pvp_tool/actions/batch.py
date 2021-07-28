@@ -1,15 +1,18 @@
-from pvp_tool.utils import db
+from pvp_tool.utils import db, flatten
 from pvp_tool.models import Task, create_cache
 from pvp_tool.actions.task import (
     assign_task,
     get_task,
     process_task_result,
     clean_tasks,
+    process_pending_tasks,
 )
+from pvp_tool.actions.mining import mining
 
 
 def request_batch(user, num_tasks):
     clean_tasks()
+    process_pending_tasks()
 
     tasks = []
     if len(tasks) < num_tasks:
@@ -37,10 +40,6 @@ def request_batch(user, num_tasks):
     return tasks
 
 
-def mining(num_targets):
-    return []
-
-
 def submit_batch(user, json_dict):
     max_id = get_max_id(json_dict)
     create_cache(max_id)
@@ -50,11 +49,6 @@ def submit_batch(user, json_dict):
         process_task_result(get_task(player_id, True), user, player)
     for guild_id, guild in json_dict["guilds"].items():
         process_task_result(get_task(guild_id, False), user, guild)
-
-
-# https://stackoverflow.com/questions/952914/how-to-make-a-flat-list-out-of-a-list-of-lists
-def flatten(t):
-    return [item for sublist in t for item in sublist]
 
 
 def get_max_id(json_dict):

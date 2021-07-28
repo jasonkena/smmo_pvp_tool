@@ -37,13 +37,25 @@ class Config(object):
     MAX_JOB_GUILDS = 20
     MAX_QUERY_RESULTS = 50
 
+    # % of mining tasks allocated to unregistered uids
+    NEW_MINING_RATIO = 0.8
+    RANDOMIZE_NEW_MINING = True
+    RANDOMIZE_OLD_MINING = True
+
+    # required time to halve additional weight
+    DECAY_TIME = timedelta(weeks=1)
+    BASE_WEIGHT = 1.0
+
+    # create a new task for a player when processed (when health < 0.5)
+    REFRESH_PLAYER = True
+
     CLIENT_CONFIG = {
         "BATCH_SIZE": 5,
         "SMMO_DELAY": (60 / 40) * 1000,
         "API_DELAY": 1000,
         "AJAX_TIMEOUT": 10000,
         # for access_token and form settings
-        "COOKIE_EXPIRY": 365
+        "COOKIE_EXPIRY": 365,
     }
 
 
