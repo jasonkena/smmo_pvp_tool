@@ -309,9 +309,11 @@ $("#mining-button").mouseover(function () {
 $("#mining-button").mouseout(function () {
   $("#mining-button").text("Mining");
 });
+$("#query-form").deserialize(cookies.get("query-form"));
 $("#queryModal").on("show.bs.modal", function () {
   $("#query-form").deserialize(cookies.get("query-form"));
 });
+$("#api-form").deserialize(cookies.get("api-form"));
 $("#apiModal").on("show.bs.modal", function () {
   $("#api-form").deserialize(cookies.get("api-form"));
 });
