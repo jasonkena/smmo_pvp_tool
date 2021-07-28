@@ -13,10 +13,10 @@ def hit(user, target_id):
         db.session.query(Hit.player_uid)
         .filter(Hit.user == user)
         .order_by(Hit.id.desc())
-        .first()[0]
+        .first()
     )
     if last_player_uid is not None:
-        get_task(last_player_uid, True)
+        get_task(last_player_uid[0], True)
 
     player = db.session.get(Player, target_id)
     assert player is not None
