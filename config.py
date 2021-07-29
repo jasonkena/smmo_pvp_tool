@@ -10,7 +10,7 @@ class Config(object):
     SECRET_KEY = (
         b"***REMOVED***"
     )
-    SQLALCHEMY_ECHO = True
+    SQLALCHEMY_ECHO = False
     SQLALCHEMY_DATABASE_URI = "postgresql+psycopg2://" + "smmo:smmo@localhost" + "/data"
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     PROPAGATE_EXCEPTIONS = True
@@ -19,7 +19,7 @@ class Config(object):
     SMMO_SERVER_API_KEY = "***REMOVED***"
 
     # if True, performing a query reduces balance
-    ENFORCE_BALANCE = False
+    ENFORCE_BALANCE = True
     QUERY_BALANCE_COST = 2
     # duration required for task assignment to be considered obsolete
     CLEAN_TASKS_DELTA = timedelta(minutes=5)
@@ -50,7 +50,7 @@ class Config(object):
     REFRESH_PLAYER = True
 
     CLIENT_CONFIG = {
-        "BATCH_SIZE": 5,
+        "BATCH_SIZE": 10,
         "SMMO_DELAY": (60 / 40) * 1000,
         "API_DELAY": 1000,
         "AJAX_TIMEOUT": 10000,

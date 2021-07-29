@@ -71,7 +71,7 @@ class Query(Resource):
             < data["num_results"] * current_app.config["QUERY_BALANCE_COST"]
         ):
             abort(
-                402,
+                401,
                 description=f"Insufficient balance for query with {data['num_results']} results",
             )
 
