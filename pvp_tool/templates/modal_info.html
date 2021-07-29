@@ -1,0 +1,170 @@
+<div
+  class="modal fade"
+  id="infoModal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="queryModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <ul class="nav nav-pills" id="pills-tab" role="tablist">
+          <li class="nav-item" role="presentation">
+            <button
+              class="nav-link active"
+              id="pills-intro-tab"
+              data-bs-toggle="pill"
+              data-bs-target="#pills-intro"
+              type="button"
+              role="tab"
+              aria-controls="pills-intro"
+              aria-selected="true"
+            >
+              Intro
+            </button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button
+              class="nav-link"
+              id="pills-usage-tab"
+              data-bs-toggle="pill"
+              data-bs-target="#pills-usage"
+              type="button"
+              role="tab"
+              aria-controls="pills-usage"
+              aria-selected="false"
+            >
+              Usage
+            </button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button
+              class="nav-link"
+              id="pills-tech-tab"
+              data-bs-toggle="pill"
+              data-bs-target="#pills-tech"
+              type="button"
+              role="tab"
+              aria-controls="pills-tech"
+              aria-selected="false"
+            >
+              Tech
+            </button>
+          </li>
+        </ul>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body tab-content" id="pills-tabContent">
+        <div
+          class="tab-pane fade show active"
+          id="pills-intro"
+          role="tabpanel"
+          aria-labelledby="pills-intro-tab"
+        >
+          Yes, this is yet another gold-mining SMMO PVP tool, but created by me!
+          Its more appealing features include:
+          <ul>
+            <li>3x/4x player filtering based on hit logs</li>
+            <li>
+              Automated mining: the tab can be left in the background and mining
+              will proceed
+            </li>
+            <li>
+              Distributed mining: public API requests are performed client-side
+              but stored on server, enabling for aggregate search results
+            </li>
+            <li>
+              Optimized search: probability of a player's data being refreshed
+              is proportional to number of hits logged
+            </li>
+            <li>
+              Player refreshing: after a player is hit, a refresh of the
+              player's data is scheduled to happen after revival (>50% health)
+            </li>
+            <li>Mobile device compability</li>
+            <li>Dark mode: self-explanatory</li>
+          </ul>
+
+          <p>
+            For a guide on how to use this website, click the Usage button
+            above.
+          </p>
+          <p>
+            If you have any questions/suggestions/bug reports, please contact me
+            on Discord (RevoGen#8780).
+          </p>
+          <p>Enjoy!</p>
+        </div>
+        <div
+          class="tab-pane fade"
+          id="pills-usage"
+          role="tabpanel"
+          aria-labelledby="pills-usage-tab"
+        >
+          <h5>Button Functions</h5>
+          <ul>
+            <li>
+              <i class="bi bi-search"></i> Performs a search on the player
+              database based on specified query parameters
+            </li>
+            <li>
+              <i class="bi bi-sliders"></i> Configure query parameters (every
+              field but the first can be left blank)
+            </li>
+            <li>Mining: Start/Stop scanning players' data</li>
+            <li><i class="bi bi-key"></i> Configure your Public API key</li>
+            <li><i class="bi bi-info-circle"></i> Open this window</li>
+            <li>Login: ...</li>
+          </ul>
+          <p>
+            The <i class="bi bi-coin"></i> indicator shows how much credits you
+            have. Mining one player's data earns one credit and searching costs
+            two credits per search result.
+          </p>
+          <p>
+            Clicking on a search result will be registered as a Hit, opening the
+            player's Attack page. A Hit will impact the 3x/4x filtering of your
+            search results.
+            <code
+              >Please refrain from clicking the same search result multiple
+              times.</code
+            >
+          </p>
+        </div>
+
+        <div
+          class="tab-pane fade"
+          id="pills-tech"
+          role="tabpanel"
+          aria-labelledby="pills-tech-tab"
+        >
+          <p>
+            This website is built with a Bootstrap frontend, Flask REST API, and
+            a PostgreSQL database.
+          </p>
+
+          <p>
+            If you are interested in building your own client atop the API, feel
+            free to use these clients (<a
+              href="{{ url_for('static', filename='pvptool.js') }}"
+              >JS</a
+            >
+            or
+            <a href="{{ url_for('static', filename='client.py') }}">Python</a>)
+            as reference points.
+          </p>
+          <p>
+            If you are interested in accessing the source code for this project,
+            please contact me.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

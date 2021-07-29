@@ -98,6 +98,7 @@ function loginVerify() {
       cookies.set("access_token", data["access_token"], {
         expires: CLIENT_CONFIG["COOKIE_EXPIRY"],
       });
+      successModal.show();
     },
   }).fail(function (jqXHR, textStatus, errorThrown) {
     raiseError(
@@ -145,12 +146,28 @@ function timeSince(date) {
   return `${count} ${interval.label}${count !== 1 ? "s" : ""} ago`;
 }
 
+//https://stackoverflow.com/questions/10599933/convert-long-number-into-abbreviated-string-in-javascript-with-a-special-shortn
+function intToString(value) {
+  var suffixes = ["", "K", "M", "B", "T"];
+  var suffixNum = Math.floor(("" + value).length / 3);
+  var shortValue = parseFloat(
+    (suffixNum != 0 ? value / Math.pow(1000, suffixNum) : value).toPrecision(2)
+  );
+  if (shortValue % 1 != 0) {
+    shortValue = shortValue.toFixed(1);
+  }
+  return shortValue + suffixes[suffixNum];
+}
+
 function createRow(object) {
   let row = "<tr onclick=\"window.open('" + object["url"] + "')\">";
   row += "<td>" + object["name"] + "</td>";
   row += '<td class="d-none d-sm-table-cell">' + object["guild_name"] + "</td>";
   row += '<td class="font-monospace text-end">' + object["level"] + "</td>";
-  row += '<td class="font-monospace text-end">' + object["gold"] + "</td>";
+  row +=
+    '<td class="font-monospace text-end">' +
+    intToString(object["gold"]) +
+    "</td>";
   row += "<td>" + timeSince(object["timestamp"]) + "</td>";
   row += "</tr>";
   return row;
@@ -282,7 +299,9 @@ function miningStatus(value) {
 
 var uidModal = bootstrap.Modal.getOrCreateInstance($("#uidModal"));
 var verifyModal = bootstrap.Modal.getOrCreateInstance($("#verifyModal"));
+var successModal = bootstrap.Modal.getOrCreateInstance($("#successModal"));
 var errorModal = bootstrap.Modal.getOrCreateInstance($("#errorModal"));
+var infoModal = bootstrap.Modal.getOrCreateInstance($("#infoModal"));
 
 loginStatus();
 $("#search-button").click(getQuery);
@@ -327,3 +346,7 @@ $("#apiModal").on("hidden.bs.modal", function () {
     expires: CLIENT_CONFIG["COOKIE_EXPIRY"],
   });
 });
+$(document).on("keydown", "form", function (event) {
+  return event.key != "Enter";
+});
+infoModal.show();

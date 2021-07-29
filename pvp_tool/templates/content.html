@@ -1,28 +1,41 @@
 {% extends "base.html" %} {% block title %}PVP Tool{% endblock %} {% block
 content %}
 
-<nav class="navbar sticky-top navbar-expand-lg navbar-light bg-light">
+<nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark">
   <div class="container-fluid">
     <a class="navbar-brand me-auto" href="#">PVP Tool</a>
     <div class="navbar-nav mx-auto">
-      <button type="button" class="nav-item btn btn-primary" id="mining-button">
-        Mining
-      </button>
-      <a class="nav-item nav-link" href="#" id="search-button">Search</a>
+      <a class="nav-item nav-link px-3" href="#" id="search-button"
+        ><i class="bi bi-search"></i
+      ></a>
       <a
-        class="nav-item nav-link"
+        class="nav-item nav-link px-3"
         data-bs-toggle="modal"
         data-bs-target="#queryModal"
         href="#"
-        >Settings</a
+        ><i class="bi bi-sliders"></i
+      ></a>
+      <button
+        type="button"
+        class="nav-item btn btn-primary px-3"
+        id="mining-button"
       >
+        Mining
+      </button>
       <a
-        class="nav-item nav-link"
+        class="nav-item nav-link px-3"
         data-bs-toggle="modal"
         data-bs-target="#apiModal"
         href="#"
-        >Key</a
-      >
+        ><i class="bi bi-key"></i
+      ></a>
+      <a
+        class="nav-item nav-link px-3"
+        data-bs-toggle="modal"
+        data-bs-target="#infoModal"
+        href="#"
+        ><i class="bi bi-info-circle"></i
+      ></a>
     </div>
     <div class="navbar-nav ms-auto">
       <div class="nav-item navbar-text mx-3">
@@ -31,7 +44,7 @@ content %}
       </div>
       <button
         type="button"
-        class="nav-item btn btn-outline-info ms-auto"
+        class="nav-item btn btn-outline-success ms-auto"
         data-bs-toggle="modal"
         data-bs-target="#uidModal"
         id="login-button"
@@ -68,9 +81,10 @@ content %}
 </div>
 {%- endmacro %} {% for modal in [["modal_query.html", "query", "Query
 parameters"], ["modal_uid.html", "uid", "Login"], ["modal_verify.html",
-"verify", "Verification"], ["modal_error.html", "error", "Error"],
-["modal_api.html", "api", "API Key"]] %} {{ start_modal(modal[1], modal[2]) }}
-{% include modal[0] %} {{ end_modal() }} {% endfor %}
+"verify", "Verification"], ["modal_success.html", "success", "Login
+successful!"], ["modal_error.html", "error", "Error"], ["modal_api.html", "api",
+"API Key"]] %} {{ start_modal(modal[1], modal[2]) }} {% include modal[0] %} {{
+end_modal() }} {% endfor %} {% include "modal_info.html" %}
 
 <div class="container">
   <table class="table table-hover">
