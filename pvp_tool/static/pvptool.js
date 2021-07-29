@@ -63,7 +63,7 @@ function loginRequest() {
   uidModal.hide();
   let uid = getFormData($("#uid-form"))["uid"];
   if (_.isUndefined(uid)) {
-    raiseError(new Error("Invalid uid provided"));
+    raiseError(new Error("Invalid uid provided, please try again"));
   }
   $.ajax({
     type: "GET",
@@ -85,7 +85,7 @@ function loginVerify() {
   verifyModal.hide();
   let verification_token = cookies.get("verification_token");
   if (_.isUndefined(verification_token)) {
-    raiseError(new Error("Invalid verification token"));
+    raiseError(new Error("Invalid verification token, please Login"));
   }
   $.ajax({
     type: "GET",
@@ -112,7 +112,7 @@ function getQuery() {
   query = JSON.stringify(query);
   let access_token = cookies.get("access_token");
   if (_.isUndefined(access_token)) {
-    raiseError(new Error("Invalid access token"));
+    raiseError(new Error("Invalid access token, please Login"));
   }
   $.ajax({
     type: "POST",
@@ -182,7 +182,7 @@ function updateTable(data) {
 function requestBatch() {
   let access_token = cookies.get("access_token");
   if (_.isUndefined(access_token)) {
-    raiseError(new Error("Invalid access token"));
+    raiseError(new Error("Invalid access token, please Login"));
   }
   return $.ajax({
     type: "POST",
@@ -202,7 +202,7 @@ function requestBatch() {
 function processTask(task) {
   let api_key = getFormData($("#api-form"))["api"];
   if (_.isUndefined(api_key)) {
-    raiseError(new Error("Invalid api_key provided"));
+    raiseError(new Error("Invalid api_key provided, please click the Key button"));
   }
   let endpoint = task["is_player_task"]
     ? "https://api.simple-mmo.com/v1/player/info/"
@@ -224,7 +224,7 @@ function processTask(task) {
 function submitBatch(data) {
   let access_token = cookies.get("access_token");
   if (_.isUndefined(access_token)) {
-    raiseError(new Error("Invalid access token"));
+    raiseError(new Error("Invalid access token, please Login"));
   }
   return $.ajax({
     type: "POST",
