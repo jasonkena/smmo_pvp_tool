@@ -55,7 +55,8 @@ class BatchSubmit(Resource):
             {
                 "id": fields.Int(required=True, strict=True, validate=Range(min=1)),
                 "name": fields.Str(required=True),
-                "level": fields.Int(required=True, strict=True, validate=Range(min=1)),
+                # min=0 because of UID 69882
+                "level": fields.Int(required=True, strict=True, validate=Range(min=0)),
                 "motto": fields.Str(required=True),
                 # https://web.simple-mmo.com/user/view/5 has null profile number
                 "profile_number": fields.Str(required=True, allow_none=True),
@@ -84,7 +85,8 @@ class BatchSubmit(Resource):
                     required=True, strict=True, validate=Range(min=0)
                 ),
                 "hp": fields.Int(required=True, strict=True, validate=Range(min=0)),
-                "max_hp": fields.Int(required=True, strict=True, validate=Range(min=1)),
+                # min=0 because of UID 69882
+                "max_hp": fields.Int(required=True, strict=True, validate=Range(min=0)),
                 "safeMode": fields.Bool(required=True),
                 "safeModeTime": fields.DateTime(required=True, allow_none=True),
                 "background": fields.Int(required=True, strict=True),

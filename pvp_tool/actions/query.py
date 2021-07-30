@@ -20,9 +20,10 @@ def process_query(
     player_blacklist.extend(generate_player_blacklist(user))
     player_blacklist.append(user.uid)
 
+    # +1 in denominator because of UID 69882
     query = db.session.query(Player).filter(
         Player.invalid == False,
-        (Player.hp + 0.0) / Player.max_hp >= 0.5,
+        (Player.hp + 0.0) / (Player.max_hp + 1) >= 0.5,
         Player.safeMode == False,
     )
     if guild_ids:
