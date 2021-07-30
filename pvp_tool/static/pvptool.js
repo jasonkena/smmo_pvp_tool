@@ -202,7 +202,9 @@ function requestBatch() {
 function processTask(task) {
   let api_key = getFormData($("#api-form"))["api"];
   if (_.isUndefined(api_key)) {
-    raiseError(new Error("Invalid api_key provided, please click the Key button"));
+    raiseError(
+      new Error("Invalid api_key provided, please click the Key button")
+    );
   }
   let endpoint = task["is_player_task"]
     ? "https://api.simple-mmo.com/v1/player/info/"
@@ -234,6 +236,28 @@ function submitBatch(data) {
     url: CLIENT_CONFIG["SERVER_URL"] + "api/batch/submit",
     data: JSON.stringify(data),
     cache: false,
+  }).fail(function (jqXHR, textStatus, errorThrown) {
+    raiseError(
+      new Error(jqXHR.responseText + " " + textStatus + " " + errorThrown)
+    );
+  });
+}
+
+function createJob(guild_ids) {
+  let access_token = cookies.get("access_token");
+  $.ajax({
+    type: "POST",
+    beforeSend: function (xhr) {
+      if (!_.isUndefined(access_token)) {
+        xhr.setRequestHeader("Authorization", "Bearer " + access_token);
+      }
+    },
+    url: CLIENT_CONFIG["SERVER_URL"] + "api/job/create",
+    data: JSON.stringify({ guild_ids: guild_ids }),
+    cache: false,
+    success: function (data) {
+      console.log(data);
+    },
   }).fail(function (jqXHR, textStatus, errorThrown) {
     raiseError(
       new Error(jqXHR.responseText + " " + textStatus + " " + errorThrown)
