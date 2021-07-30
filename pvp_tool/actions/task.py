@@ -24,6 +24,8 @@ def create_pending_task(uid, is_player_task, timestamp):
 
 
 def refresh_player(player):
+    if player.invalid:
+        return
     # +1 because of UID 69882
     if player.hp / (player.max_hp + 1) < 0.5:
         # https://web.simple-mmo.com/diamondstore/membership
