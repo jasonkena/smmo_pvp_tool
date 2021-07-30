@@ -35,7 +35,9 @@ def process_query(
 
     query = query.filter(Player.gold >= minimum_gold)
     query = query.filter(~Player.uid.in_(player_blacklist))
-    query = query.filter(~Player.guild_id.in_(guild_blacklist))
+    query = query.filter(
+        (Player.guild_id == None) | (~Player.guild_id.in_(guild_blacklist))
+    )
     if last_update:
         query = query.filter(
             Player.timestamp
