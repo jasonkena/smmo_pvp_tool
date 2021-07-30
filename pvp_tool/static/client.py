@@ -3,11 +3,12 @@ import json
 import time
 import requests
 
-UID = 613732 # Enter your UID here
+UID = 613732  # Enter your UID here
 RATE_LIMIT = 40
 API_KEY = "Copy your key from https://web.simple-mmo.com/p-api/home"
 ACCESS_TOKEN = "welp"
 BASE_URL = "http://127.0.0.1:5000"
+
 
 def create_headers(token):
     if token:
@@ -49,7 +50,11 @@ class PVPToolAPI:
     @staticmethod
     def request_batch(access_token, num_tasks):
         headers = create_headers(access_token)
-        r = requests.post(f"{BASE_URL}/api/batch/request", json = {"num_tasks": num_tasks}, headers=headers)
+        r = requests.post(
+            f"{BASE_URL}/api/batch/request",
+            json={"num_tasks": num_tasks},
+            headers=headers,
+        )
         r.raise_for_status()
 
         result = r.json()
@@ -67,11 +72,15 @@ class PVPToolAPI:
     @staticmethod
     def create_job(access_token, guild_ids):
         headers = create_headers(access_token)
-        r = requests.post(f"{BASE_URL}/api/job/create", headers=headers, json={"guild_ids": guild_ids})
+        r = requests.post(
+            f"{BASE_URL}/api/job/create", headers=headers, json={"guild_ids": guild_ids}
+        )
         r.raise_for_status()
 
         result = r.json()
-        print(f"Job {result['job_id']} with {result['num_tasks']} tasks has been created")
+        print(
+            f"Job {result['job_id']} with {result['num_tasks']} tasks has been created"
+        )
         return result
 
     @staticmethod
@@ -81,13 +90,34 @@ class PVPToolAPI:
         r.raise_for_status()
 
         result = r.json()
-        print(f"Job {result['job_id']} has {result['num_tasks']} tasks; completed: {result['is_completed']}")
+        print(
+            f"Job {result['job_id']} has {result['num_tasks']} tasks; completed: {result['is_completed']}"
+        )
         return result
 
     @staticmethod
-    def query(access_token, num_results, guild_ids=None, maximum_level=None, minimum_gold=None, player_blacklist=None, guild_blacklist=None, last_update=None, sort_by=None):
-        data = {"num_results":num_results, "guild_ids":guild_ids, "maximum_level":maximum_level, "minimum_gold":minimum_gold, "player_blacklist":player_blacklist, "guild_blacklist":guild_blacklist, "last_update":last_update, "sort_by":sort_by}
-        data = {k:v for (k,v) in data.items() if v is not None}
+    def query(
+        access_token,
+        num_results,
+        guild_ids=None,
+        maximum_level=None,
+        minimum_gold=None,
+        player_blacklist=None,
+        guild_blacklist=None,
+        last_update=None,
+        sort_by=None,
+    ):
+        data = {
+            "num_results": num_results,
+            "guild_ids": guild_ids,
+            "maximum_level": maximum_level,
+            "minimum_gold": minimum_gold,
+            "player_blacklist": player_blacklist,
+            "guild_blacklist": guild_blacklist,
+            "last_update": last_update,
+            "sort_by": sort_by,
+        }
+        data = {k: v for (k, v) in data.items() if v is not None}
 
         headers = create_headers(access_token)
         r = requests.post(f"{BASE_URL}/api/query/submit", headers=headers, json=data)
@@ -110,7 +140,6 @@ class PVPClient:
         time.sleep(60 / RATE_LIMIT)
         return r.json()
 
-
     def get_guild(self, guild_id):
         # return list of users
         r = requests.post(
@@ -125,7 +154,7 @@ class PVPClient:
         return r.json()
 
     def process_tasks(self, tasks):
-        result = {"players": {}, "guilds":{}}
+        result = {"players": {}, "guilds": {}}
         for task in tqdm(tasks):
             if task["is_player_task"]:
                 result["players"][task["uid"]] = self.get_user(task["uid"])
@@ -137,6 +166,7 @@ class PVPClient:
 def main():
     client = PVPClient()
     a = PVPToolAPI.login_status(ACCESS_TOKEN)
+
 
 if __name__ == "__main__":
     main()
