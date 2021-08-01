@@ -19,7 +19,7 @@ function loginStatus() {
     type: "GET",
     beforeSend: function (xhr) {
       if (!_.isUndefined(access_token)) {
-        xhr.setRequestHeader("Authorization", "Bearer " + access_token);
+        xhr.setRequestHeader("Authorization", `Bearer ${access_token}`);
       }
     },
     url: CLIENT_CONFIG["SERVER_URL"] + "api/login/status",
@@ -30,9 +30,7 @@ function loginStatus() {
       $("#balance").text(data["balance"]);
     },
   }).fail(function (jqXHR, textStatus, errorThrown) {
-    raiseError(
-      new Error(jqXHR.responseText + " " + textStatus + " " + errorThrown)
-    );
+    raiseError(new Error(`${jqXHR.responseText} ${textStatus} ${errorThrown}`));
   });
 }
 
@@ -75,9 +73,7 @@ function loginRequest() {
       verifyModal.show();
     },
   }).fail(function (jqXHR, textStatus, errorThrown) {
-    raiseError(
-      new Error(jqXHR.responseText + " " + textStatus + " " + errorThrown)
-    );
+    raiseError(new Error(`${jqXHR.responseText} ${textStatus} ${errorThrown}`));
   });
 }
 
@@ -90,7 +86,7 @@ function loginVerify() {
   $.ajax({
     type: "GET",
     beforeSend: function (xhr) {
-      xhr.setRequestHeader("Authorization", "Bearer " + verification_token);
+      xhr.setRequestHeader("Authorization", `Bearer ${access_token}`);
     },
     url: CLIENT_CONFIG["SERVER_URL"] + "api/login/verify",
     cache: false,
@@ -101,9 +97,7 @@ function loginVerify() {
       successModal.show();
     },
   }).fail(function (jqXHR, textStatus, errorThrown) {
-    raiseError(
-      new Error(jqXHR.responseText + " " + textStatus + " " + errorThrown)
-    );
+    raiseError(new Error(`${jqXHR.responseText} ${textStatus} ${errorThrown}`));
   });
 }
 
@@ -117,16 +111,14 @@ function getQuery() {
   $.ajax({
     type: "POST",
     beforeSend: function (xhr) {
-      xhr.setRequestHeader("Authorization", "Bearer " + access_token);
+      xhr.setRequestHeader("Authorization", `Bearer ${access_token}`);
     },
     url: CLIENT_CONFIG["SERVER_URL"] + "api/query/submit",
     data: query,
     cache: false,
     success: updateTable,
   }).fail(function (jqXHR, textStatus, errorThrown) {
-    raiseError(
-      new Error(jqXHR.responseText + " " + textStatus + " " + errorThrown)
-    );
+    raiseError(new Error(`${jqXHR.responseText} ${textStatus} ${errorThrown}`));
   });
 }
 
@@ -160,15 +152,14 @@ function intToString(value) {
 }
 
 function createRow(object) {
-  let row = "<tr onclick=\"window.open('" + object["url"] + "')\">";
-  row += "<td>" + object["name"] + "</td>";
-  row += '<td class="d-none d-sm-table-cell">' + object["guild_name"] + "</td>";
-  row += '<td class="font-monospace text-end">' + object["level"] + "</td>";
-  row +=
-    '<td class="font-monospace text-end">' +
-    intToString(object["gold"]) +
-    "</td>";
-  row += "<td>" + timeSince(object["timestamp"]) + "</td>";
+  let row = `<tr onclick="window.open('${object["url"]}')">`;
+  row += `<td>${object["name"]}</td>`;
+  row += `<td class="d-none d-sm-table-cell">${object["guild_name"]}</td>`;
+  row += `<td class="font-monospace text-end">${object["level"]}</td>`;
+  row += `<td class="font-monospace text-end">${intToString(
+    object["gold"]
+  )}</td>`;
+  row += `<td>${timeSince(object["timestamp"])}</td>`;
   row += "</tr>";
   return row;
 }
@@ -187,15 +178,13 @@ function requestBatch() {
   return $.ajax({
     type: "POST",
     beforeSend: function (xhr) {
-      xhr.setRequestHeader("Authorization", "Bearer " + access_token);
+      xhr.setRequestHeader("Authorization", `Bearer ${access_token}`);
     },
     url: CLIENT_CONFIG["SERVER_URL"] + "api/batch/request",
     data: JSON.stringify({ num_tasks: CLIENT_CONFIG["BATCH_SIZE"] }),
     cache: false,
   }).fail(function (jqXHR, textStatus, errorThrown) {
-    raiseError(
-      new Error(jqXHR.responseText + " " + textStatus + " " + errorThrown)
-    );
+    raiseError(new Error(`${jqXHR.responseText} ${textStatus} ${errorThrown}`));
   });
 }
 
@@ -217,9 +206,7 @@ function processTask(task) {
     data: { api_key: api_key },
     cache: false,
   }).fail(function (jqXHR, textStatus, errorThrown) {
-    raiseError(
-      new Error(jqXHR.responseText + " " + textStatus + " " + errorThrown)
-    );
+    raiseError(new Error(`${jqXHR.responseText} ${textStatus} ${errorThrown}`));
   });
 }
 
@@ -231,15 +218,13 @@ function submitBatch(data) {
   return $.ajax({
     type: "POST",
     beforeSend: function (xhr) {
-      xhr.setRequestHeader("Authorization", "Bearer " + access_token);
+      xhr.setRequestHeader("Authorization", `Bearer ${access_token}`);
     },
     url: CLIENT_CONFIG["SERVER_URL"] + "api/batch/submit",
     data: JSON.stringify(data),
     cache: false,
   }).fail(function (jqXHR, textStatus, errorThrown) {
-    raiseError(
-      new Error(jqXHR.responseText + " " + textStatus + " " + errorThrown)
-    );
+    raiseError(new Error(`${jqXHR.responseText} ${textStatus} ${errorThrown}`));
   });
 }
 
@@ -249,7 +234,7 @@ function createJob(guild_ids) {
     type: "POST",
     beforeSend: function (xhr) {
       if (!_.isUndefined(access_token)) {
-        xhr.setRequestHeader("Authorization", "Bearer " + access_token);
+        xhr.setRequestHeader("Authorization", `Bearer ${access_token}`);
       }
     },
     url: CLIENT_CONFIG["SERVER_URL"] + "api/job/create",
@@ -259,9 +244,7 @@ function createJob(guild_ids) {
       console.log(data);
     },
   }).fail(function (jqXHR, textStatus, errorThrown) {
-    raiseError(
-      new Error(jqXHR.responseText + " " + textStatus + " " + errorThrown)
-    );
+    raiseError(new Error(`${jqXHR.responseText} ${textStatus} ${errorThrown}`));
   });
 }
 
@@ -271,7 +254,7 @@ function getJob(job_id) {
     type: "GET",
     beforeSend: function (xhr) {
       if (!_.isUndefined(access_token)) {
-        xhr.setRequestHeader("Authorization", "Bearer " + access_token);
+        xhr.setRequestHeader("Authorization", `Bearer ${access_token}`);
       }
     },
     url: CLIENT_CONFIG["SERVER_URL"] + "api/job/" + job_id,
@@ -280,9 +263,7 @@ function getJob(job_id) {
       console.log(data);
     },
   }).fail(function (jqXHR, textStatus, errorThrown) {
-    raiseError(
-      new Error(jqXHR.responseText + " " + textStatus + " " + errorThrown)
-    );
+    raiseError(new Error(`${jqXHR.responseText} ${textStatus} ${errorThrown}`));
   });
 }
 
