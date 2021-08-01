@@ -25,8 +25,12 @@ class Config(object):
 
     LOGIN_REQUEST_MOTTO_LENGTH = 6
     LOGIN_REQUEST_DELTA = timedelta(minutes=5)
+    # Hit URL expiry
     HIT_DELTA = timedelta(minutes=5)
     HIT_URL = "https://web.simple-mmo.com/user/attack/"
+
+    # Same player won't be shown for x minutes, to allow for mining to refresh
+    HIT_COOLDOWN = timedelta(minutes=5)
     # login expiry (set to False for no delta)
     LOGIN_DELTA = False
     BYPASS_MOTTO_CHECK = False
