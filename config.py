@@ -7,16 +7,15 @@ class Config(object):
     # NOTE: ALWAYS ROUND DOWN
     NUM_PLAYERS = 615000
 
-    SECRET_KEY = (
-        b"***REMOVED***"
-    )
+    # Generate one with os.urandom(24).hex()
+    SECRET_KEY = "secret-key"
     SQLALCHEMY_ECHO = False
     SQLALCHEMY_DATABASE_URI = "postgresql+psycopg2://" + "smmo:smmo@localhost" + "/data"
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     PROPAGATE_EXCEPTIONS = True
 
     # used to query levels and authentication
-    SMMO_SERVER_API_KEY = "***REMOVED***"
+    SMMO_SERVER_API_KEY = "api-key"
 
     # if True, performing a query reduces balance
     ENFORCE_BALANCE = True
@@ -57,9 +56,3 @@ class Config(object):
         # for access_token and form settings
         "COOKIE_EXPIRY": 365,
     }
-
-
-class ProductionConfig(Config):
-    SQLALCHEMY_ECHO = False
-    BYPASS_MOTTO_CHECK = False
-    ENFORCE_BALANCE = True

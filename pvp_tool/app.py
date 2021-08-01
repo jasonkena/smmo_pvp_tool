@@ -8,7 +8,7 @@ from pvp_tool.cli import app_cli
 def create_app():
     # create and configure the app
     app = Flask(__name__)
-    app.config.from_object("config.Config")
+    app.config.from_object("prod_config.ProductionConfig")
 
     db.init_app(app)
     jwt.init_app(app)
