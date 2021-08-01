@@ -86,7 +86,7 @@ function loginVerify() {
   $.ajax({
     type: "GET",
     beforeSend: function (xhr) {
-      xhr.setRequestHeader("Authorization", `Bearer ${access_token}`);
+      xhr.setRequestHeader("Authorization", `Bearer ${verification_token}`);
     },
     url: CLIENT_CONFIG["SERVER_URL"] + "api/login/verify",
     cache: false,
