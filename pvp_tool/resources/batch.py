@@ -13,6 +13,8 @@ class BatchRequest(Resource):
     decorators = [jwt_required(fresh=True)]
 
     def post(self):
+        db.session.connection(execution_options={"isolation_level": "SERIALIZABLE"})
+
         class InputSchema(Schema):
             num_tasks = fields.Int(
                 required=True,
