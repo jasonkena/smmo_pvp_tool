@@ -151,8 +151,8 @@ function intToString(value) {
   return shortValue + suffixes[suffixNum];
 }
 
-function createRow(object) {
-  let row = `<tr onclick="window.open('${object["url"]}')">`;
+function createRow(object, index) {
+  let row = `<tr id="${index}" class="hit" data-url="${object["url"]}" onclick="processRow(this.id)">`;
   row += `<td>${object["name"]}</td>`;
   row += `<td class="d-none d-sm-table-cell">${object["guild_name"]}</td>`;
   row += `<td class="font-monospace text-end">${object["level"]}</td>`;
@@ -162,6 +162,23 @@ function createRow(object) {
   row += `<td>${timeSince(object["timestamp"])}</td>`;
   row += "</tr>";
   return row;
+}
+
+function processRow(id) {
+  let element = $("#" + id);
+  let url = element.attr("data-url");
+  window.open(url);
+  element.remove();
+}
+
+function turbo() {
+  let hits = $(".hit");
+  if (hits.length) {
+    processRow(hits[0].id);
+  }
+  if (!$(".hit").length) {
+    $("#search-button").click();
+  }
 }
 
 function updateTable(data) {
@@ -374,5 +391,11 @@ $("#apiModal").on("hidden.bs.modal", function () {
 });
 $(document).on("keydown", "form", function (event) {
   return event.key != "Enter";
+});
+document.addEventListener("keyup", (event) => {
+  if (event.code === "Space" && event.target.tagName !== "INPUT") {
+    turbo();
+  }
+  return false;
 });
 infoModal.show();
