@@ -8,13 +8,16 @@ from flask_jwt_extended import jwt_required
 from marshmallow import Schema, fields, ValidationError
 from marshmallow.validate import Range
 
+from sqlalchemy.exc import DBAPIError
+from psycopg2 import errors
+
+SerializationFailure = errors.lookup("40001")
+
 
 class BatchRequest(Resource):
     decorators = [jwt_required(fresh=True)]
 
     def post(self):
-        db.session.connection(execution_options={"isolation_level": "SERIALIZABLE"})
-
         class InputSchema(Schema):
             num_tasks = fields.Int(
                 required=True,
@@ -26,19 +29,27 @@ class BatchRequest(Resource):
             uid = fields.Int(required=True)
             is_player_task = fields.Bool(required=True)
 
-        user = get_current_user()
-
         try:
-            data = InputSchema().load(request.get_json(force=True))
-        except ValidationError as e:
-            print(e.messages)
-            return e.messages, 422
+            db.session.connection(execution_options={"isolation_level": "SERIALIZABLE"})
+            user = get_current_user()
 
-        batch = request_batch(user, data["num_tasks"])
-        result = OutputSchema(many=True).dump(batch)
+            try:
+                data = InputSchema().load(request.get_json(force=True))
+            except ValidationError as e:
+                print(e.messages)
+                return e.messages, 422
 
-        db.session.commit()
-        return result
+            batch = request_batch(user, data["num_tasks"])
+            result = OutputSchema(many=True).dump(batch)
+
+            db.session.commit()
+            return result
+        except DBAPIError as error:
+            if isinstance(error.orig, SerializationFailure):
+                db.session.rollback()
+                return self.post()
+            else:
+                raise error
 
 
 class BatchSubmit(Resource):
