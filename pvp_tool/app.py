@@ -18,7 +18,11 @@ def create_app():
     @app.route("/")
     def client():
         client_config = current_app.config["CLIENT_CONFIG"].copy()
-        client_config["SERVER_URL"] = request.base_url
+        client_config["SERVER_URL"] = request.url_root
         return render_template("content.html", CLIENT_CONFIG=client_config)
+
+    @app.route("/pvptool.user.js")
+    def userscript():
+        return render_template("pvptool.user.js", SERVER_URL=request.url_root)
 
     return app

@@ -41,6 +41,20 @@
           <li class="nav-item" role="presentation">
             <button
               class="nav-link"
+              id="pills-userscript-tab"
+              data-bs-toggle="pill"
+              data-bs-target="#pills-userscript"
+              type="button"
+              role="tab"
+              aria-controls="pills-userscript"
+              aria-selected="false"
+            >
+              Userscript
+            </button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button
+              class="nav-link"
               id="pills-features-tab"
               data-bs-toggle="pill"
               data-bs-target="#pills-features"
@@ -147,11 +161,41 @@
         </div>
         <div
           class="tab-pane fade show"
+          id="pills-userscript"
+          role="tabpanel"
+          aria-labelledby="pills-userscript-tab"
+        >
+          <h5>Usage Guide (PC only)</h5>
+          <ul>
+            <li>
+              Install
+              <a href="https://www.tampermonkey.net/">Tampermonkey</a> (NOT
+              Greasemonkey or Violentmonkey) for your browser
+            </li>
+            <li>
+              Install the
+              <a href="{{ url_for('userscript') }}">PVP Tool userscript</a>
+            </li>
+            <li><code>Close ALL SMMO tabs</code></li>
+            <li>
+              <code>Close ALL PVP Tool tabs</code> (except for this one) and
+              refresh this page
+            </li>
+            <li>Click on a player hit</li>
+            <li>
+              Now you press spacebar on the Attack page to switch to the next
+              hit
+            </li>
+          </ul>
+        </div>
+        <div
+          class="tab-pane fade show"
           id="pills-features"
           role="tabpanel"
           aria-labelledby="pills-features-tab"
         >
           <ul>
+            <li>SMMO Website integration via Userscript (PC only)</li>
             <li>Press spacebar to auto-hit/auto-query</li>
             <li>3x/4x player filtering based on hit logs</li>
             <li>

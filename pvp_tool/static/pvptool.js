@@ -164,21 +164,27 @@ function createRow(object, index) {
   return row;
 }
 
-function processRow(id) {
+function processRow(id, is_gm) {
   let element = $("#" + id);
   let url = element.attr("data-url");
-  window.open(url);
   element.remove();
+  if (_.isUndefined(is_gm)) {
+    window.open(url);
+  } else {
+    return url;
+  }
 }
 
-function turbo() {
+function turbo(is_gm) {
   let hits = $(".hit");
+  let result = false;
   if (hits.length) {
-    processRow(hits[0].id);
+    result = processRow(hits[0].id, is_gm);
   }
   if (!$(".hit").length) {
-    $("#search-button").click();
+    setTimeout($("#search-button").click(), 1000);
   }
+  return result;
 }
 
 function updateTable(data) {
@@ -392,7 +398,7 @@ $("#apiModal").on("hidden.bs.modal", function () {
 $(document).on("keydown", "form", function (event) {
   return event.key != "Enter";
 });
-document.addEventListener("keyup", (event) => {
+document.addEventListener("keydown", (event) => {
   if (event.code === "Space" && event.target.tagName !== "INPUT") {
     turbo();
   }
