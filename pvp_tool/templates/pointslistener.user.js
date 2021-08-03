@@ -1,12 +1,13 @@
 // ==UserScript==
 // @name         PointsListener
-// @namespace    {{ SERVER_URL }}
+// @namespace    https://revogen.tech/
 // @require      https://code.jquery.com/jquery-3.6.0.min.js
 // @version      0.1
 // @description  Notification script for EP/QP
 // @author       RevoGen
+// @exclude      https://web.simple-mmo.com/login
 // @match        https://web.simple-mmo.com/*
-// @icon         {{ url_for('static', filename='favicon.svg', _external=True) }}
+// @icon         https://revogen.tech/static/favicon.svg
 // @grant        GM_setValue
 // @grant        GM_getValue
 // @grant        GM_addValueChangeListener
@@ -14,7 +15,7 @@
 /* globals $ */
 
 // https://support.discord.com/hc/en-us/articles/206346498-Where-can-I-find-my-User-Server-Message-ID
-const DISCORD_UID = "replace-this";
+const DISCORD_UID = "242219798140944384";
 // Insert your Discord webhook URL (defaults to #points-listener-ping in RevoGen's server: https://discord.gg/2msJUHEzUx)
 const WEBHOOK_URL =
   "https://discord.com/api/webhooks/871946732043378698/M0PdLv2psn-55JQBGtIWFXki5K4Vfh72_Ew1St1-ZLeGUJ_1NrTdM24h40HsuwWEeYJx";
