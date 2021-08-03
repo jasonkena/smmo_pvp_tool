@@ -22,7 +22,10 @@ def create_app():
         return render_template("content.html", CLIENT_CONFIG=client_config)
 
     @app.route("/pvptool.user.js")
-    def userscript():
+    def tool_userscript():
         return render_template("pvptool.user.js", SERVER_URL=request.url_root)
 
+    @app.route("/pointslistener.user.js")
+    def points_userscript():
+        return render_template("pointslistener.user.js", SERVER_URL=request.url_root)
     return app

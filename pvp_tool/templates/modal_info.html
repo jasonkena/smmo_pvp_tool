@@ -165,7 +165,7 @@
           role="tabpanel"
           aria-labelledby="pills-userscript-tab"
         >
-          <h5>Usage Guide (PC only)</h5>
+          <h5>PVPTool Guide (PC only)</h5>
           <ul>
             <li>
               Install
@@ -174,7 +174,7 @@
             </li>
             <li>
               Install the
-              <a href="{{ url_for('userscript') }}">PVP Tool userscript</a>
+              <a href="{{ url_for('tool_userscript') }}">PVP Tool userscript</a>
             </li>
             <li><code>Close ALL SMMO tabs</code></li>
             <li>
@@ -186,6 +186,22 @@
               Now you press spacebar on the Attack page to switch to the next
               hit
             </li>
+          </ul>
+          <h5>PointsListener Guide (PC only)</h5>
+          <ul>
+            <li>
+              Install
+              <a href="https://www.tampermonkey.net/">Tampermonkey</a> (NOT
+              Greasemonkey or Violentmonkey) for your browser
+            </li>
+            <li>
+              Install the
+              <a href="{{ url_for('points_userscript') }}">PointsListener userscript</a>
+            </li>
+            <li>Replace DISCORD_UID (and the webhook URL if you like)</li>
+            <li>Close all SMMO tabs then open a new SMMO tab</li>
+            <li>Now whenever you click the avatar button on the top right, the scheduled timing for the notification will be refreshed</li>
+            <li>Keep any SMMO tab open to receive Discord notifications</li>
           </ul>
         </div>
         <div
