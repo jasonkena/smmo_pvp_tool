@@ -6,8 +6,9 @@ class Player(db.Model):
     invalid = db.Column(db.Boolean, nullable=False)
     name = db.Column(db.String(), nullable=False)
     level = db.Column(db.Integer, nullable=False)
+    # edge case because of Mike: UID 1
     motto = db.Column(
-        db.String(100), nullable=False
+        db.String(200), nullable=False
     )  # as specified on https://web.simple-mmo.com/diamondstore/membership
     profile_number = db.Column(db.String(4), nullable=False)
     exp = db.Column(db.BigInteger, nullable=False)
