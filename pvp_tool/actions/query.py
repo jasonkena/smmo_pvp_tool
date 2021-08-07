@@ -1,7 +1,7 @@
 from datetime import datetime, timezone, timedelta
 from flask import current_app
 from pvp_tool.utils import db
-from pvp_tool.models import Player
+from pvp_tool.models import Player, PlayerCache
 from pvp_tool.actions import generate_player_blacklist, clean_hits
 
 
@@ -21,10 +21,16 @@ def process_query(
     player_blacklist.append(user.uid)
 
     # +1 in denominator because of UID 69882
-    query = db.session.query(Player).filter(
-        Player.invalid == False,
-        (Player.hp + 0.0) / (Player.max_hp + 1) >= 0.5,
-        Player.safeMode == False,
+    query = (
+        db.session.query(Player)
+        .join(PlayerCache)
+        .filter(
+            # if a player has a pending refresh, do not show it as a result
+            PlayerCache.task == None,
+            Player.invalid == False,
+            (Player.hp + 0.0) / (Player.max_hp + 1) >= 0.5,
+            Player.safeMode == False,
+        )
     )
     if guild_ids:
         query = query.filter(Player.guild_id.in_(guild_ids))

@@ -27,11 +27,6 @@ def hit(user, target_id):
 
 def generate_player_blacklist(user):
     # https://dba.stackexchange.com/questions/54187/select-rows-where-column-contains-same-data-in-more-than-one-record
-    cooldown_query = db.session.query(Hit.player_uid).filter(
-        Hit.user == user,
-        Hit.timestamp
-        > (datetime.now(timezone.utc) - current_app.config["HIT_COOLDOWN"]),
-    )
     base_query = (
         db.session.query(Hit.player_uid)
         .group_by(Hit.player_uid)
@@ -46,7 +41,7 @@ def generate_player_blacklist(user):
         Hit.timestamp > (datetime.now(timezone.utc) - timedelta(hours=24))
     ).having(db.func.count("*") >= 4)
 
-    return list(set(flatten(cooldown_query.all()+ three_query.all() + four_query.all())))
+    return list(set(flatten(three_query.all() + four_query.all())))
 
 
 def create_hit_token(user, target_id):
