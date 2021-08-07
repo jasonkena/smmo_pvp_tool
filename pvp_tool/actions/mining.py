@@ -34,6 +34,7 @@ def old_mining(num_targets):
         db.session.query(PlayerCache.uid)
         .filter(PlayerCache.player != None, PlayerCache.task == None)
         .join(Player)
+        .filter(Player.invalid == False)
         .order_by(
             -db.func.log(value) / (Player.weight + current_app.config["BASE_WEIGHT"])
         )
