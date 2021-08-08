@@ -25,6 +25,7 @@ def process_query(
         db.session.query(Player)
         .join(PlayerCache)
         .filter(
+            PlayerCache.bans == None,
             # if a player has a pending refresh, do not show it as a result
             PlayerCache.task == None,
             Player.invalid == False,

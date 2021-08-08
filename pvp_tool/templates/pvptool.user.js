@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         PVPTool Integration
 // @namespace    {{ SERVER_URL }}
-// @version      0.1
+// @version      0.2
 // @description  Integration script for RevoGen's PVP Tool
 // @author       RevoGen
 // @match        {{ SERVER_URL }}*
@@ -32,6 +32,11 @@ function tool() {
       GM_setValue("turbo_submit", url);
     }
   });
+  GM_addValueChangeListener("ban_uid", function (name, old_value, new_value) {
+    unsafeWindow.banPlayer(new_value);
+    console.log(`Banning player ${new_value}`);
+  });
+
   console.log("Tool listener loaded");
 }
 
@@ -55,5 +60,31 @@ function smmo() {
     }
     return false;
   });
+  (function (open) {
+    unsafeWindow.XMLHttpRequest.prototype.open = function (method, url) {
+      if (
+        new RegExp("https://api.simple-mmo.com/api/user/attack/*").test(url)
+      ) {
+        this.addEventListener(
+          "readystatechange",
+          function () {
+            if (this.readyState == 4 && this.status == 200) {
+              let response = JSON.parse(this.responseText);
+              if (
+                response.type == "error" &&
+                response.result.toLowerCase().includes("ban")
+              ) {
+                let ban_uid = url.split("/").pop();
+                GM_setValue("ban_uid", ban_uid);
+                console.log(`Banning player ${ban_uid}`);
+              }
+            }
+          },
+          false
+        );
+      }
+      open.apply(this, arguments);
+    };
+  })(unsafeWindow.XMLHttpRequest.prototype.open);
   console.log("SMMO listener loaded");
 }
