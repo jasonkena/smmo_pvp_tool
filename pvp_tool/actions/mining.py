@@ -15,7 +15,9 @@ def mining(num_targets):
 def new_mining(num_targets):
     # choose untouched uids
     uids = db.session.query(PlayerCache.uid).filter(
-        PlayerCache.player == None, PlayerCache.task == None
+        PlayerCache.player == None,
+        PlayerCache.task == None,
+        PlayerCache.pending_task == None,
     )
     if current_app.config["RANDOMIZE_NEW_MINING"]:
         uids = uids.order_by(db.func.random())
@@ -32,7 +34,11 @@ def old_mining(num_targets):
     # join because https://stackoverflow.com/questions/16589208/attributeerror-while-querying-neither-instrumentedattribute-object-nor-compa
     uids = (
         db.session.query(PlayerCache.uid)
-        .filter(PlayerCache.player != None, PlayerCache.task == None)
+        .filter(
+            PlayerCache.player != None,
+            PlayerCache.task == None,
+            PlayerCache.pending_task == None,
+        )
         .join(Player)
         .filter(Player.invalid == False)
         .order_by(

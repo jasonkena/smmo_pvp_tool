@@ -28,6 +28,7 @@ def process_query(
             PlayerCache.bans == None,
             # if a player has a pending refresh, do not show it as a result
             PlayerCache.task == None,
+            PlayerCache.pending_task == None,
             Player.invalid == False,
             (Player.hp + 0.0) / (Player.max_hp + 1) >= 0.5,
             Player.safeMode == False,

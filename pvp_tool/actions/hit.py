@@ -3,20 +3,16 @@ from pvp_tool.utils import db, flatten
 from pvp_tool.models import Player, Hit
 from flask_jwt_extended import create_access_token
 from datetime import datetime, timedelta, timezone
-from pvp_tool.actions.task import get_task
+from pvp_tool.actions.task import get_task, create_pending_task
 
 
 def hit(user, target_id):
-    # create a task for last player, update player weight, create a Hit object
-    # NOTE: this does not create a task for the *last* hit (e.g., after logging off)
-    last_player_uid = (
-        db.session.query(Hit.player_uid)
-        .filter(Hit.user == user)
-        .order_by(Hit.id.desc())
-        .first()
+    # create a pending task target player, update player weight, create a Hit object
+    create_pending_task(
+        target_id,
+        True,
+        datetime.now(timezone.utc) + current_app.config["HIT_REFRESH_DELTA"],
     )
-    if last_player_uid is not None:
-        get_task(last_player_uid[0], True)
 
     player = db.session.get(Player, target_id)
     assert player is not None
