@@ -4,7 +4,7 @@ from pvp_tool.utils import db
 
 class PlayerCache(db.Model):
     __tablename__ = "playercache"
-    uid = db.Column(db.Integer, primary_key=True, nullable=False)
+    uid = db.Column(db.Integer, primary_key=True, nullable=False, index=True)
     player = db.relationship("Player", uselist=False, viewonly=True)
     task = db.relationship(
         "Task",
