@@ -9,6 +9,7 @@ dependencies:
   - flask-jwt-extended
   - flask-restful
   - flask-sqlalchemy
+  - flask-migrate
   - marshmallow
   - marshmallow-oneofschema
   - psycopg2
