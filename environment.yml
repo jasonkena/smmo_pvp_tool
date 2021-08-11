@@ -4,12 +4,12 @@ channels:
   - conda-forge
   - defaults
 dependencies:
-    - python=3.9
-    - flask
-    - flask-jwt-extended
-    - flask-restful
-    - flask-sqlalchemy
-    - marshmallow
-    - marshmallow-oneofschema
-    - psycopg2
-    - requests
+  - python=3.9
+  - flask
+  - flask-jwt-extended
+  - flask-restful
+  - flask-sqlalchemy
+  - marshmallow
+  - marshmallow-oneofschema
+  - psycopg2
+  - requests

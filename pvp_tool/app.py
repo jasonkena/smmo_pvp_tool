@@ -28,4 +28,5 @@ def create_app():
     @app.route("/pointslistener.user.js")
     def points_userscript():
         return render_template("pointslistener.user.js", SERVER_URL=request.url_root)
+
     return app
