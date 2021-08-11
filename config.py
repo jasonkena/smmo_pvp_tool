@@ -56,7 +56,7 @@ class Config(object):
         "BATCH_SIZE": 10,
         "SMMO_DELAY": (60 / 40) * 1000,
         "API_DELAY": 1000,
-        "AJAX_TIMEOUT": 10000,
+        "AJAX_TIMEOUT": 30000,
         # for access_token and form settings
         "COOKIE_EXPIRY": 365,
     }
