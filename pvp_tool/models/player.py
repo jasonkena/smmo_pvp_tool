@@ -2,7 +2,9 @@ from pvp_tool.utils import db
 
 
 class Player(db.Model):
-    uid = db.Column(db.ForeignKey("playercache.uid"), primary_key=True, nullable=False)
+    uid = db.Column(
+        db.ForeignKey("playercache.uid"), primary_key=True, nullable=False, index=True
+    )
     invalid = db.Column(db.Boolean, nullable=False)
     name = db.Column(db.String(), nullable=False)
     level = db.Column(db.Integer, nullable=False)
