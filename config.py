@@ -44,6 +44,8 @@ class Config(object):
     NEW_MINING_RATIO = 0.8
     RANDOMIZE_NEW_MINING = True
     RANDOMIZE_OLD_MINING = True
+    # cache future mining results
+    MINING_BUFFER = 100
 
     # required time to halve additional weight
     DECAY_TIME = timedelta(weeks=1)

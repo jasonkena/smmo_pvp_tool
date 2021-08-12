@@ -1,3 +1,4 @@
+from flask import current_app
 from pvp_tool.utils import db, flatten
 from pvp_tool.models import Task, create_cache
 from pvp_tool.actions.task import (
@@ -32,8 +33,11 @@ def request_batch(user, num_tasks):
         )
 
     if len(tasks) < num_tasks:
-        tasks.extend(mining(num_tasks - len(tasks)))
+        tasks.extend(
+            mining(max(current_app.config["MINING_BUFFER"], num_tasks - len(tasks)))
+        )
 
+    tasks = tasks[:num_tasks]
     for task in tasks:
         assign_task(task, user)
 
