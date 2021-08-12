@@ -1,17 +1,13 @@
 from flask import request, current_app
 from pvp_tool.utils import db
 from pvp_tool.actions import request_batch, submit_batch, get_current_user
+from pvp_tool.models import PlayerCache
 from marshmallow_oneofschema import OneOfSchema
 
 from flask_restful import Resource
 from flask_jwt_extended import jwt_required
 from marshmallow import Schema, fields, ValidationError
 from marshmallow.validate import Range
-
-from sqlalchemy.exc import DBAPIError
-from psycopg2 import errors
-
-SerializationFailure = errors.lookup("40001")
 
 
 class BatchRequest(Resource):
@@ -29,27 +25,25 @@ class BatchRequest(Resource):
             uid = fields.Int(required=True)
             is_player_task = fields.Bool(required=True)
 
+        user = get_current_user()
+
         try:
-            db.session.connection(execution_options={"isolation_level": "SERIALIZABLE"})
-            user = get_current_user()
+            data = InputSchema().load(request.get_json(force=True))
+        except ValidationError as e:
+            print(e.messages)
+            return e.messages, 422
 
-            try:
-                data = InputSchema().load(request.get_json(force=True))
-            except ValidationError as e:
-                print(e.messages)
-                return e.messages, 422
+        # Lock concurrent batch requests (not released until commit/rollback)
+        # NOTE: assumes that PlayerCache has been initialized
+        db.session.query(PlayerCache).with_for_update().filter(
+            PlayerCache.uid == 1
+        ).first()
 
-            batch = request_batch(user, data["num_tasks"])
-            result = OutputSchema(many=True).dump(batch)
+        batch = request_batch(user, data["num_tasks"])
+        result = OutputSchema(many=True).dump(batch)
 
-            db.session.commit()
-            return result
-        except DBAPIError as error:
-            if isinstance(error.orig, SerializationFailure):
-                db.session.rollback()
-                return self.post()
-            else:
-                raise error
+        db.session.commit()
+        return result
 
 
 class BatchSubmit(Resource):
