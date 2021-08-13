@@ -182,7 +182,7 @@ function turbo(is_gm) {
     result = processRow(hits[0].id, is_gm);
   }
   if (!$(".hit").length) {
-    setTimeout($("#search-button").click(), 1000);
+    $("#search-button").click();
   }
   return result;
 }
