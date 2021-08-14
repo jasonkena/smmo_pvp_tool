@@ -1,6 +1,6 @@
 from math import ceil
 from flask import current_app
-from datetime import datetime, timezone
+from datetime import datetime, timezone, timedelta
 from pvp_tool.utils import db
 from pvp_tool.models import Task, PendingTask, Player, parse_player_json
 
@@ -26,6 +26,13 @@ def create_pending_task(uid, is_player_task, timestamp):
 def refresh_player(player):
     if player.invalid:
         return
+
+    # null safeModeTime indicates permanent safeMode
+    if player.safeMode and (player.safeModeTime is not None):
+        timestamp = player.safeModeTime + timedelta(days=1)
+        create_pending_task(player.uid, True, timestamp)
+        return
+
     # +1 because of UID 69882
     if player.hp / (player.max_hp + 1) < 0.5:
         # https://web.simple-mmo.com/diamondstore/membership
