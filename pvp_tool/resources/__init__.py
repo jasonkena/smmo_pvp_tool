@@ -43,6 +43,14 @@ ban_bp = Blueprint("ban", ban.__name__, url_prefix="/ban")
 ban_api = Api(ban_bp)
 ban_api.add_resource(ban.BanPlayer, "/<int:player_id>")
 
+import pvp_tool.resources.leaderboard as leaderboard
+
+leaderboard_bp = Blueprint(
+    "leaderboard", leaderboard.__name__, url_prefix="/leaderboard"
+)
+leaderboard_api = Api(leaderboard_bp)
+leaderboard_api.add_resource(leaderboard.Leaderboard, "/get")
+
 
 api_bp.register_blueprint(login_bp)
 api_bp.register_blueprint(batch_bp)
@@ -50,3 +58,4 @@ api_bp.register_blueprint(job_bp)
 api_bp.register_blueprint(query_bp)
 api_bp.register_blueprint(hit_bp)
 api_bp.register_blueprint(ban_bp)
+api_bp.register_blueprint(leaderboard_bp)

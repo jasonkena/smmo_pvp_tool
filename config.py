@@ -54,6 +54,8 @@ class Config(object):
     # create a new task for a player when processed (when health < 0.5)
     REFRESH_PLAYER = True
 
+    NUM_LEADERBOARD = 20
+
     CLIENT_CONFIG = {
         "BATCH_SIZE": 10,
         "SMMO_DELAY": (60 / 40) * 1000,
