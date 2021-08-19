@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         PVPTool Integration
 // @namespace    {{ SERVER_URL }}
-// @version      0.31
+// @version      0.32
 // @description  Integration script for RevoGen's PVP Tool
 // @author       RevoGen
 // @match        {{ SERVER_URL }}*
@@ -32,7 +32,6 @@ function tool() {
       let xhr = new XMLHttpRequest();
       xhr.responseType = "json";
       xhr.onreadystatechange = function () {
-        console.log("inside");
         if (xhr.readyState == 4 && xhr.status == 200) {
           GM_setValue("turbo_submit", xhr.response["redirect"]);
         }
@@ -57,17 +56,19 @@ function turboRequest() {
 }
 
 function smmo() {
-  GM_addValueChangeListener(
-    "turbo_submit",
-    function (name, old_value, new_value) {
-      window.location.href = new_value;
-    }
-  );
+  if (window.location.href === GM_getValue("turbo_submit")) {
+    turboRequest();
+  }
 
   // https://stackoverflow.com/a/47337711/10702372
   function listener(event) {
     if (event.code === "Space" && event.target.tagName !== "INPUT") {
-      turboRequest();
+      let url = GM_getValue("turbo_submit");
+      if (window.location.href === url) {
+        turboRequest();
+      } else {
+        window.location.href = url;
+      }
     }
     event.preventDefault();
     event.stopPropagation();
