@@ -25,8 +25,6 @@ class Config(object):
 
     LOGIN_REQUEST_MOTTO_LENGTH = 6
     LOGIN_REQUEST_DELTA = timedelta(minutes=5)
-    # Hit URL expiry
-    HIT_DELTA = timedelta(minutes=5)
     HIT_URL = "https://web.simple-mmo.com/user/attack/"
     # Time after hit when pending task should be scheduled
     HIT_REFRESH_DELTA = timedelta(minutes=2)

@@ -45,7 +45,7 @@ def create_hit_token(user, target_id):
     access_token = create_access_token(
         -1,
         fresh=False,
-        expires_delta=current_app.config["HIT_DELTA"],
+        expires_delta=False,
         additional_claims={"hit_data": data},
     )
     return access_token

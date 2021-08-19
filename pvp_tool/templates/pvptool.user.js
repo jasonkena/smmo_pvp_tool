@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         PVPTool Integration
 // @namespace    {{ SERVER_URL }}
-// @version      0.3
+// @version      0.31
 // @description  Integration script for RevoGen's PVP Tool
 // @author       RevoGen
 // @match        {{ SERVER_URL }}*
@@ -29,7 +29,16 @@ function tool() {
     console.log("Turbo request received");
     let url = unsafeWindow.turbo(true);
     if (url) {
-      GM_setValue("turbo_submit", url);
+      let xhr = new XMLHttpRequest();
+      xhr.responseType = "json";
+      xhr.onreadystatechange = function () {
+        console.log("inside");
+        if (xhr.readyState == 4 && xhr.status == 200) {
+          GM_setValue("turbo_submit", xhr.response["redirect"]);
+        }
+      };
+      xhr.open("POST", url, true);
+      xhr.send(null);
     }
   });
   GM_addValueChangeListener("ban_uid", function (name, old_value, new_value) {

@@ -17,3 +17,13 @@ class Hit(Resource):
 
         db.session.commit()
         return redirect(current_app.config["HIT_URL"] + str(target))
+
+    def post(self):
+        # will raise an error if undefined
+        claims = get_jwt()["hit_data"]
+        user = get_user(claims["uid"])
+        target = claims["target"]
+        hit(user, target)
+
+        db.session.commit()
+        return {"redirect": current_app.config["HIT_URL"] + str(target)}
