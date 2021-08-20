@@ -164,10 +164,23 @@ function createRow(object, index) {
   return row;
 }
 
-function processRow(id, is_gm) {
+async function processRow(id, is_gm) {
   let element = $("#" + id);
   let url = element.attr("data-url");
   element.remove();
+
+  url = (
+    await $.ajax({
+      type: "POST",
+      url: url,
+      cache: false,
+    }).fail(function (jqXHR, textStatus, errorThrown) {
+      raiseError(
+        new Error(`${jqXHR.responseText} ${textStatus} ${errorThrown}`)
+      );
+    })
+  )["redirect"];
+
   if (_.isUndefined(is_gm)) {
     window.open(url);
   } else {
@@ -175,14 +188,14 @@ function processRow(id, is_gm) {
   }
 }
 
-function turbo(is_gm) {
+async function turbo(is_gm) {
   let hits = $(".hit");
   let result = false;
   if (hits.length) {
-    result = processRow(hits[0].id, is_gm);
+    result = await processRow(hits[0].id, is_gm);
   }
   if (!$(".hit").length) {
-    $("#search-button").click();
+    getQuery();
   }
   return result;
 }
