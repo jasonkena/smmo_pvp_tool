@@ -16,7 +16,7 @@ def request_batch(user, num_tasks):
     process_pending_tasks()
 
     tasks = []
-    if len(tasks) < num_tasks:
+    if (not current_app.config["MULTIPLE_MINING"]) and (len(tasks) < num_tasks):
         tasks.extend(
             db.session.query(Task)
             .filter(Task.assigned_user == user)
