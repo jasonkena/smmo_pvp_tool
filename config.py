@@ -43,7 +43,7 @@ class Config(object):
     RANDOMIZE_NEW_MINING = True
     RANDOMIZE_OLD_MINING = True
     # cache future mining results
-    MINING_BUFFER = 100
+    MINING_BUFFER = 200
     # enable simultaneous mining in several tabs
     MULTIPLE_MINING = True
 
