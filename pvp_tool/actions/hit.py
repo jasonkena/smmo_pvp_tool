@@ -43,10 +43,7 @@ def generate_player_blacklist(user):
 def create_hit_token(user, target_id):
     data = {"uid": user.uid, "target": target_id}
     access_token = create_access_token(
-        -1,
-        fresh=False,
-        expires_delta=False,
-        additional_claims={"hit_data": data},
+        -1, fresh=False, expires_delta=False, additional_claims={"hit_data": data}
     )
     return access_token
 

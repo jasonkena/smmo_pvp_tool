@@ -1,13 +1,13 @@
 // ==UserScript==
 // @name         PointsListener
-// @namespace    https://revogen.tech/
+// @namespace    {{ SERVER_URL }}
 // @require      https://code.jquery.com/jquery-3.6.0.min.js
 // @version      0.1
 // @description  Notification script for EP/QP
 // @author       RevoGen
 // @exclude      https://web.simple-mmo.com/login
 // @match        https://web.simple-mmo.com/*
-// @icon         https://revogen.tech/static/favicon.svg
+// @icon         {{ url_for('static', filename='favicon.svg', _external=True) }}
 // @grant        GM_setValue
 // @grant        GM_getValue
 // @grant        GM_addValueChangeListener
