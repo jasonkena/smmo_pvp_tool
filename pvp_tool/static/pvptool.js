@@ -7,6 +7,9 @@ $.ajaxSetup({
 });
 
 function raiseError(error) {
+  clearTimeouts();
+  miningStatus(false);
+  updateMiningText();
   $(".modal").modal("hide");
   $("#error-text").text(error.message);
   errorModal.show();
@@ -356,15 +359,8 @@ async function loop() {
 async function mining() {
   clearTimeouts();
   if (miningStatus()) {
-    try {
-      await loop();
-      setTimeout(mining, CLIENT_CONFIG["API_DELAY"]);
-    } catch (error) {
-      clearTimeouts();
-      miningStatus(false);
-      updateMiningText();
-      throw error;
-    }
+    await loop();
+    timeouts.push(setTimeout(mining, CLIENT_CONFIG["API_DELAY"]));
   }
 }
 
