@@ -63,4 +63,6 @@ class Config(object):
         "AJAX_TIMEOUT": 30000,
         # for access_token and form settings
         "COOKIE_EXPIRY": 365,
+        # for SearchListener UserScript
+        "AUTO_SEARCH_DELAY": 300000,
     }

@@ -30,4 +30,8 @@ def create_app():
     def points_userscript():
         return render_template("pointslistener.user.js", SERVER_URL=request.url_root)
 
+    @app.route("/searchlistener.user.js")
+    def search_userscript():
+        return render_template("searchlistener.user.js", SERVER_URL=request.url_root)
+
     return app

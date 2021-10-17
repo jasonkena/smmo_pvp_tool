@@ -111,7 +111,7 @@ function getQuery() {
   if (_.isUndefined(access_token)) {
     raiseError(new Error("Invalid access token, please Login"));
   }
-  $.ajax({
+  return $.ajax({
     type: "POST",
     beforeSend: function (xhr) {
       xhr.setRequestHeader("Authorization", `Bearer ${access_token}`);
