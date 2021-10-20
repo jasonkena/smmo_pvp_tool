@@ -68,7 +68,7 @@ class BatchSubmit(Resource):
                 # https://web.simple-mmo.com/user/view/5 has null profile number
                 "profile_number": fields.Str(required=True, allow_none=True),
                 "exp": fields.Int(required=True, strict=True, validate=Range(min=0)),
-                "gold": fields.Int(required=True, strict=True, validate=Range(min=0)),
+                "gold": fields.Int(required=True, strict=True),
                 "steps": fields.Int(required=True, strict=True, validate=Range(min=0)),
                 "npc_kills": fields.Int(
                     required=True, strict=True, validate=Range(min=0)
@@ -91,7 +91,7 @@ class BatchSubmit(Resource):
                 "bonus_str": fields.Int(
                     required=True, strict=True, validate=Range(min=0)
                 ),
-                "hp": fields.Int(required=True, strict=True, validate=Range(min=0)),
+                "hp": fields.Int(required=True, strict=True),
                 # min=0 because of UID 69882
                 "max_hp": fields.Int(required=True, strict=True, validate=Range(min=0)),
                 "safeMode": fields.Bool(required=True),
