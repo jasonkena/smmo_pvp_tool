@@ -110,8 +110,9 @@ class BatchSubmit(Resource):
                 "chests_opened": fields.Int(
                     required=True, strict=True, validate=Range(min=0)
                 ),
+                # strict=False because of edge case. See Player UID 82315
                 "dailies_unlocked": fields.Int(
-                    required=True, strict=True, validate=Range(min=0)
+                    required=True, strict=False, validate=Range(min=0)
                 ),
                 "avatar": fields.Str(required=True),
                 "market_trades": fields.Int(
