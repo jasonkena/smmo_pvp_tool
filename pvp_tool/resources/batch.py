@@ -99,6 +99,33 @@ class BatchSubmit(Resource):
                 "background": fields.Int(required=True, strict=True),
                 "membership": fields.Bool(required=True),
                 "guild": fields.Nested(PlayerGuildSchema, required=False),
+                "creation_date": fields.DateTime(required=True, allow_none=True),
+                "reputation": fields.Int(required=True, strict=True),
+                "tasks_completed": fields.Int(
+                    required=True, strict=True, validate=Range(min=0)
+                ),
+                "bounties_completed": fields.Int(
+                    required=True, strict=True, validate=Range(min=0)
+                ),
+                "chests_opened": fields.Int(
+                    required=True, strict=True, validate=Range(min=0)
+                ),
+                "dailies_unlocked": fields.Int(
+                    required=True, strict=True, validate=Range(min=0)
+                ),
+                "avatar": fields.Str(required=True),
+                "market_trades": fields.Int(
+                    required=True, strict=True, validate=Range(min=0)
+                ),
+                "market_trades": fields.Int(
+                    required=True, strict=True, validate=Range(min=0)
+                ),
+                "last_activity": fields.Int(
+                    required=True, strict=True, validate=Range(min=0)
+                ),
+                "boss_kills": fields.Int(
+                    required=True, strict=True, validate=Range(min=0)
+                ),
             }
         )
 

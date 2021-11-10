@@ -1,3 +1,4 @@
+from datetime import datetime, timezone
 from pvp_tool.utils import db
 
 
@@ -33,6 +34,18 @@ class Player(db.Model):
     membership = db.Column(db.Boolean, nullable=False)
     guild_id = db.Column(db.Integer, nullable=True)
     guild_name = db.Column(db.String(), nullable=True)
+
+    # New fields added in November 10 update
+    creation_date = db.Column(db.DateTime(timezone=True), nullable=False)
+    reputation = db.Column(db.Integer, nullable=False)
+    tasks_completed = db.Column(db.Integer, nullable=False)
+    bounties_completed = db.Column(db.Integer, nullable=False)
+    chests_opened = db.Column(db.Integer, nullable=False)
+    dailies_unlocked = db.Column(db.Integer, nullable=False)
+    avatar = db.Column(db.String(), nullable=False)
+    market_trades = db.Column(db.Integer, nullable=False)
+    last_activity = db.Column(db.DateTime(timezone=True), nullable=False)
+    boss_kills = db.Column(db.Integer, nullable=False)
 
     # cache = db.relationship("PlayerCache", uselist=False, viewonly=True)
     # player who scanned
@@ -87,6 +100,16 @@ NULL_MAPPING = {
     "safeModeTime": None,
     "background": -1,
     "membership": False,
+    "creation_date": datetime.min.replace(tzinfo=timezone.utc),
+    "reputation": 0,
+    "tasks_completed": -1,
+    "bounties_completed": -1,
+    "chests_opened": -1,
+    "dailies_unlocked": -1,
+    "avatar": "",
+    "market_trades": -1,
+    "last_activity": datetime.min.replace(tzinfo=timezone.utc),
+    "boss_kills": -1,
 }
 
 
@@ -118,4 +141,8 @@ def parse_player_json(dictionary):
         updated_dict["guild_name"] = updated_dict["guild"]["name"]
         updated_dict["guild_id"] = updated_dict["guild"]["id"]
         updated_dict.pop("guild")
+
+    updated_dict["last_activity"] = datetime.utcfromtimestamp(
+        updated_dict["last_activity"]
+    )
     return updated_dict
