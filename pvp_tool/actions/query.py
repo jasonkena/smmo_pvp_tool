@@ -38,7 +38,9 @@ def process_query(
         query = query.filter(Player.guild_id.in_(guild_ids))
 
     query = query.filter(Player.level <= maximum_level)
-    if maximum_level >= 100:
+    if maximum_level >= 200:
+        query = query.filter(Player.level >= 200)
+    elif maximum_level >= 100:
         query = query.filter(Player.level >= 100)
 
     query = query.filter(Player.gold >= minimum_gold)
