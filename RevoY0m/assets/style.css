@@ -1,0 +1,16 @@
+body {
+  font-family: sans-serif;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 0 8px;
+}
+
+@media (prefers-color-scheme: dark) {
+  html {
+    background: #1c1c1c;
+    color: white;
+  }
+  a {
+    color: #6bf;
+  }
+}

@@ -22,6 +22,10 @@ def create_app():
         client_config["SERVER_URL"] = request.url_root
         return render_template("content.html", CLIENT_CONFIG=client_config)
 
+    @app.route("/mobilesim.user.js")
+    def mobilesim_userscript():
+        return render_template("mobilesim.user.js", SERVER_URL=request.url_root)
+
     @app.route("/pvptool.user.js")
     def tool_userscript():
         return render_template("pvptool.user.js", SERVER_URL=request.url_root)

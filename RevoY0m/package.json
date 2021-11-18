@@ -1,0 +1,19 @@
+{
+  "name": "RevoY0m",
+  "version": "0.0.1",
+  "description": "Forward RevoGen's PVP tool results to Y0mu's PVPTool",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "author": "RevoGen",
+  "license": "MIT",
+  "dependencies": {
+    "messenger": "^0.0.9",
+    "ws": "^8.2.3"
+  },
+  "devDependencies": {
+    "electron": "^16.0.0",
+    "electron-builder": "^22.13.1"
+  }
+}
