@@ -43,7 +43,7 @@ class Config(object):
     RANDOMIZE_NEW_MINING = True
     RANDOMIZE_OLD_MINING = True
     # cache future mining results
-    MINING_BUFFER = 200
+    MINING_BUFFER = 400
     # enable simultaneous mining in several tabs
     MULTIPLE_MINING = True
 
@@ -58,7 +58,7 @@ class Config(object):
 
     CLIENT_CONFIG = {
         "BATCH_SIZE": 10,
-        "SMMO_DELAY": (60 / 39) * 1000,
+        "SMMO_DELAY": (60 / 38) * 1000,
         "API_DELAY": 1000,
         "AJAX_TIMEOUT": 30000,
         # for access_token and form settings
