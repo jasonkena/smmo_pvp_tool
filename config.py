@@ -58,7 +58,7 @@ class Config(object):
 
     CLIENT_CONFIG = {
         "BATCH_SIZE": 10,
-        "SMMO_DELAY": (60 / 40) * 1000,
+        "SMMO_DELAY": (60 / 39) * 1000,
         "API_DELAY": 1000,
         "AJAX_TIMEOUT": 30000,
         # for access_token and form settings
