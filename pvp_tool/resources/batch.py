@@ -152,6 +152,12 @@ class BatchSubmit(Resource):
             )
             current_hp = fields.Int(required=True, strict=True, validate=Range(min=0))
             max_hp = fields.Int(required=True, strict=True, validate=Range(min=1))
+            last_activity = fields.Int(
+                required=True, strict=True, validate=Range(min=0)
+            )
+            npc_kills = fields.Int(required=True, strict=True, validate=Range(min=0))
+            steps = fields.Int(required=True, strict=True, validate=Range(min=0))
+            user_kills = fields.Int(required=True, strict=True, validate=Range(min=0))
 
         class PlayersSchema(OneOfSchema):
             type_schemas = {"error": ErrorSchema, "player": PlayerSchema}
