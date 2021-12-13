@@ -48,7 +48,9 @@ def upgrade():
     )
     op.add_column(
         "player",
-        sa.Column("dailies_unlocked", sa.Integer(), nullable=False, server_default="-1"),
+        sa.Column(
+            "dailies_unlocked", sa.Integer(), nullable=False, server_default="-1"
+        ),
     )
     op.add_column(
         "player", sa.Column("avatar", sa.String(), nullable=False, server_default="")
@@ -71,7 +73,18 @@ def upgrade():
         sa.Column("boss_kills", sa.Integer(), nullable=False, server_default="-1"),
     )
     # clear server_defaults
-    for field in ["creation_date", "reputation", "tasks_completed", "bounties_completed", "chests_opened", "dailies_unlocked", "avatar", "market_trades", "last_activity", "boss_kills"]:
+    for field in [
+        "creation_date",
+        "reputation",
+        "tasks_completed",
+        "bounties_completed",
+        "chests_opened",
+        "dailies_unlocked",
+        "avatar",
+        "market_trades",
+        "last_activity",
+        "boss_kills",
+    ]:
         op.alter_column("player", field, server_default=None)
     # ### end Alembic commands ###
 
