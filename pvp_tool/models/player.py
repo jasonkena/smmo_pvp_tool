@@ -47,6 +47,10 @@ class Player(db.Model):
     last_activity = db.Column(db.DateTime(timezone=True), nullable=False)
     boss_kills = db.Column(db.Integer, nullable=False)
 
+    # New fields added in December 13 update
+    location_id = db.Column(db.Integer, nullable=False)
+    location_name = db.Column(db.String(), nullable=False)
+
     # cache = db.relationship("PlayerCache", uselist=False, viewonly=True)
     # player who scanned
     # many to one
@@ -145,4 +149,9 @@ def parse_player_json(dictionary):
     updated_dict["last_activity"] = datetime.utcfromtimestamp(
         updated_dict["last_activity"]
     )
+
+    updated_dict["location_id"] = updated_dict["current_location"]["id"]
+    updated_dict["location_name"] = updated_dict["current_location"]["name"]
+    updated_dict.pop("current_location")
+
     return updated_dict

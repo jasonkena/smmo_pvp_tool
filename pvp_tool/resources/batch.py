@@ -66,6 +66,10 @@ class BatchSubmit(Resource):
         class ErrorSchema(Schema):
             error = fields.Str(required=True)
 
+        class LocationSchema(Schema):
+            id = fields.Int(required=True, strict=True, validate=Range(min=0))
+            name = fields.Str(required=True)
+
         class PlayerGuildSchema(Schema):
             id = fields.Int(required=True, strict=True, validate=Range(min=1))
             name = fields.Str(required=True)
@@ -108,7 +112,8 @@ class BatchSubmit(Resource):
                 # min=0 because of UID 69882
                 "max_hp": fields.Int(required=True, strict=True, validate=Range(min=0)),
                 "safeMode": fields.Bool(required=True),
-                "safeModeTime": fields.DateTime(required=True, allow_none=True),
+                # False because of December 13 update
+                "safeModeTime": fields.DateTime(required=False, allow_none=True),
                 "background": fields.Int(required=True, strict=True),
                 "membership": fields.Bool(required=True),
                 "guild": fields.Nested(PlayerGuildSchema, required=False),
@@ -139,6 +144,7 @@ class BatchSubmit(Resource):
                 "boss_kills": fields.Int(
                     required=True, strict=True, validate=Range(min=0)
                 ),
+                "current_location": fields.Nested(LocationSchema),
             }
         )
 
