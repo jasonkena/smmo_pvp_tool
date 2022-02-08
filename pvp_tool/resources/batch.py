@@ -145,6 +145,9 @@ class BatchSubmit(Resource):
                     required=True, strict=True, validate=Range(min=0)
                 ),
                 "current_location": fields.Nested(LocationSchema),
+                "quests_performed": fields.Int(
+                    required=True, strict=True, validate=Range(min=0)
+                ),
             }
         )
 

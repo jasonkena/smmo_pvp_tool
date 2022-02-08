@@ -51,6 +51,9 @@ class Player(db.Model):
     location_id = db.Column(db.Integer, nullable=False)
     location_name = db.Column(db.String(), nullable=False)
 
+    # New fields added in February 7 update
+    quests_performed = db.Column(db.Integer, nullable=False)
+
     # cache = db.relationship("PlayerCache", uselist=False, viewonly=True)
     # player who scanned
     # many to one
@@ -114,6 +117,7 @@ NULL_MAPPING = {
     "market_trades": -1,
     "last_activity": datetime.min.replace(tzinfo=timezone.utc),
     "boss_kills": -1,
+    "quests_performed": -1,
 }
 
 
