@@ -43,7 +43,7 @@ def process_query(
     ranges = current_app.config["PVP_RANGES"]
     minimum_level = max(
         current_app.config["MINIMUM_LEVEL"],
-        ranges[bisect_right(ranges, Player.level) - 1],
+        ranges[bisect_right(ranges, maximum_level) - 1],
     )
     query = query.filter(Player.level >= minimum_level)
 
