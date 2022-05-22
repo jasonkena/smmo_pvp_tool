@@ -6,6 +6,8 @@ class Config(object):
     # https://web.simple-mmo.com/town-hall/stats
     # NOTE: ALWAYS ROUND DOWN
     NUM_PLAYERS = 615000
+    MINIMUM_LEVEL = 5
+    PVP_RANGES =  [30, 100, 100, 200]
 
     # Generate one with os.urandom(24).hex()
     SECRET_KEY = "secret-key"

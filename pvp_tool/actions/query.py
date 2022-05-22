@@ -3,6 +3,7 @@ from flask import current_app
 from pvp_tool.utils import db
 from pvp_tool.models import Player, PlayerCache
 from pvp_tool.actions import generate_player_blacklist, clean_hits
+from bisect import bisect_right
 
 
 def process_query(
@@ -38,10 +39,13 @@ def process_query(
         query = query.filter(Player.guild_id.in_(guild_ids))
 
     query = query.filter(Player.level <= maximum_level)
-    if maximum_level >= 200:
-        query = query.filter(Player.level >= 200)
-    elif maximum_level >= 100:
-        query = query.filter(Player.level >= 100)
+
+    ranges = current_app.config["PVP_RANGES"]
+    minimum_level = max(
+        current_app.config["MINIMUM_LEVEL"],
+        ranges[bisect_right(ranges, Player.level) - 1],
+    )
+    query = query.filter(Player.level >= minimum_level)
 
     query = query.filter(Player.gold >= minimum_gold)
     query = query.filter(~Player.uid.in_(player_blacklist))
