@@ -117,6 +117,8 @@ NULL_MAPPING = {
     "market_trades": -1,
     "last_activity": datetime.min.replace(tzinfo=timezone.utc),
     "boss_kills": -1,
+    "location_id": -1,
+    "location_name": "",
     "quests_performed": -1,
 }
 
