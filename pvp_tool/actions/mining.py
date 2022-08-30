@@ -1,4 +1,6 @@
 from math import ceil
+from time import time
+import sqlalchemy as sa
 from flask import current_app
 from pvp_tool.utils import db
 from pvp_tool.models import Task, Player, PlayerCache, create_cache
@@ -42,7 +44,14 @@ def old_mining(num_targets):
         .join(Player)
         .filter(Player.invalid == False)
         .order_by(
-            -db.func.log(value) / (Player.weight + current_app.config["BASE_WEIGHT"])
+            # add factor based on time difference
+            -db.func.log(value)
+            / (
+                Player.weight
+                + current_app.config["BASE_WEIGHT"]
+                + (time() - sa.extract("epoch", Player.timestamp))
+                / current_app.config["AGE_FACTOR"].total_seconds()
+            )
         )
         .limit(num_targets)
         .all()

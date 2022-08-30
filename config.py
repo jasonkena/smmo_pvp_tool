@@ -51,6 +51,7 @@ class Config(object):
     # required time to halve additional weight
     DECAY_TIME = timedelta(weeks=1)
     BASE_WEIGHT = 1.0
+    AGE_FACTOR = timedelta(weeks=4)
 
     # create a new task for a player when processed (when health < 0.5)
     REFRESH_PLAYER = True
