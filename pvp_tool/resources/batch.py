@@ -168,6 +168,8 @@ class BatchSubmit(Resource):
             npc_kills = fields.Int(required=True, strict=True, validate=Range(min=0))
             steps = fields.Int(required=True, strict=True, validate=Range(min=0))
             user_kills = fields.Int(required=True, strict=True, validate=Range(min=0))
+            warrior = fields.Bool(required=True)
+            banned = fields.Bool(required=True)
 
         class PlayersSchema(OneOfSchema):
             type_schemas = {"error": ErrorSchema, "player": PlayerSchema}
