@@ -18,7 +18,6 @@ class PlayerCache(db.Model):
         viewonly=True,
         primaryjoin="and_(PlayerCache.uid==PendingTask.uid, PendingTask.is_player_task)",
     )
-    bans = db.relationship("Ban", uselist=True, viewonly=True)
 
     def __repr__(self):
         return f'<PlayerCache (uid={self.uid}, player="{self.player}", task="{self.task}", pending_task="{pending_task}")>'

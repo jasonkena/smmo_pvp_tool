@@ -37,12 +37,6 @@ hit_bp = Blueprint("hit", hit.__name__, url_prefix="/hit")
 hit_api = Api(hit_bp)
 hit_api.add_resource(hit.Hit, "/get")
 
-import pvp_tool.resources.ban as ban
-
-ban_bp = Blueprint("ban", ban.__name__, url_prefix="/ban")
-ban_api = Api(ban_bp)
-ban_api.add_resource(ban.BanPlayer, "/<int:player_id>")
-
 import pvp_tool.resources.leaderboard as leaderboard
 
 leaderboard_bp = Blueprint(
@@ -57,5 +51,4 @@ api_bp.register_blueprint(batch_bp)
 api_bp.register_blueprint(job_bp)
 api_bp.register_blueprint(query_bp)
 api_bp.register_blueprint(hit_bp)
-api_bp.register_blueprint(ban_bp)
 api_bp.register_blueprint(leaderboard_bp)

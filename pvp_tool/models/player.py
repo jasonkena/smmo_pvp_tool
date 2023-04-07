@@ -54,6 +54,8 @@ class Player(db.Model):
     # New fields added in February 7 update
     quests_performed = db.Column(db.Integer, nullable=False)
 
+    banned = db.Column(db.Boolean, nullable=False)
+
     # cache = db.relationship("PlayerCache", uselist=False, viewonly=True)
     # player who scanned
     # many to one
@@ -120,6 +122,7 @@ NULL_MAPPING = {
     "location_id": -1,
     "location_name": "",
     "quests_performed": -1,
+    "banned": False,
 }
 
 

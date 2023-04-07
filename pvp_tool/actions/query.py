@@ -26,13 +26,13 @@ def process_query(
         db.session.query(Player)
         .join(PlayerCache)
         .filter(
-            PlayerCache.bans == None,
             # if a player has a pending refresh, do not show it as a result
             PlayerCache.task == None,
             PlayerCache.pending_task == None,
             Player.invalid == False,
             (Player.hp + 0.0) / (Player.max_hp + 1) >= 0.5,
             Player.safeMode == False,
+            Player.banned == False,
         )
     )
     if guild_ids:

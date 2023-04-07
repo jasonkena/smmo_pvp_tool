@@ -32,10 +32,6 @@ function tool() {
       GM_setValue("turbo_submit", url);
     }
   });
-  GM_addValueChangeListener("ban_uid", function (name, old_value, new_value) {
-    unsafeWindow.banPlayer(new_value);
-    console.log(`Banning player ${new_value}`);
-  });
 
   console.log("Tool listener loaded");
 }
@@ -89,9 +85,7 @@ function smmo() {
                 response.type == "error" &&
                 response.result.toLowerCase().includes("ban")
               ) {
-                let ban_uid = url.split("/").pop();
-                GM_setValue("ban_uid", ban_uid);
-                console.log(`Banning player ${ban_uid}`);
+                console.log(`Player ${ban_uid} is banned, this should be impossible`);
               }
             }
           },

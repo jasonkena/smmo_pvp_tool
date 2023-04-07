@@ -306,25 +306,6 @@ function getJob(job_id) {
   });
 }
 
-function banPlayer(player_id) {
-  let access_token = cookies.get("access_token");
-  $.ajax({
-    type: "POST",
-    beforeSend: function (xhr) {
-      if (!_.isUndefined(access_token)) {
-        xhr.setRequestHeader("Authorization", `Bearer ${access_token}`);
-      }
-    },
-    url: CLIENT_CONFIG["SERVER_URL"] + "api/ban/" + player_id,
-    cache: false,
-    success: function (data) {
-      console.log(data);
-    },
-  }).fail(function (jqXHR, textStatus, errorThrown) {
-    raiseError(new Error(`${jqXHR.responseText} ${textStatus} ${errorThrown}`));
-  });
-}
-
 var timeouts = [];
 function clearTimeouts() {
   _.forEach(timeouts, (x) => clearTimeout(x));
