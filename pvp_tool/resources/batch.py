@@ -148,6 +148,7 @@ class BatchSubmit(Resource):
                 "quests_performed": fields.Int(
                     required=True, strict=True, validate=Range(min=0)
                 ),
+                "banned": fields.Bool(required=True),
             }
         )
 
